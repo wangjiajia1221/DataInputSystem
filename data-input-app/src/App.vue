@@ -1,5 +1,11 @@
 <template>
   <div id="app">
+    <router-view class="view"></router-view>
+    <ul>
+      <li><a href="/first">first page</a></li>
+      <li><a href="/second">second page</a></li>
+      <li><a href="/third">third page</a></li>
+    </ul>
     <img src="./assets/logo.png">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
