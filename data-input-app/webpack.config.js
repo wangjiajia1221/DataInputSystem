@@ -11,12 +11,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader'
-        ],
-      },      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -37,9 +31,17 @@ module.exports = {
           name: '[name].[ext]?[hash]'
         }
       },
-	  {
-		test: /\.less$/,
-		loader: "style-loader!css-loader!less-loader",
+  	  {
+    		test: /\.less$/,
+    		loader: "style-loader!css-loader!less-loader",
+      },
+      {
+        test: /\.css$/,
+        loader: "css-loader"
+      },
+      {
+        test: /\.(eot|woff|woff2|ttf)([\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\?]?.*)$/,
+        loader: "file-loader"
       }
     ]
   },
