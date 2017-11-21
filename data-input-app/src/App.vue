@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <nav-menu></nav-menu>
     <router-view class="view"></router-view>
     <ul>
       <li><a href="/first">first page</a></li>
@@ -26,8 +27,12 @@
 </template>
 
 <script>
+import navMenu from './menu.vue'
 export default {
   name: 'app',
+  components: {
+    navMenu
+  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
