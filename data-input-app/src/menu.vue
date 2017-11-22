@@ -38,7 +38,7 @@
 </template>
 
 <style lang="less">
-  .el-menu-vertical-demo:not(.el-menu--collapse) {
+  .el-menu{
     width: 200px;
     min-height: 400px;
   }
