@@ -1,28 +1,18 @@
 <template>
   <div id="app">
-    <nav-menu></nav-menu>
-    <router-view class="view"></router-view>
-    <ul>
-      <li><a href="/first">first page</a></li>
-      <li><a href="/second">second page</a></li>
-      <li><a href="/third">third page</a></li>
-    </ul>
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <div class="left-container">
+      <nav-menu></nav-menu>
+    </div>
+    <div class="right-container">
+      <router-view class="view"></router-view>
+      <ul>
+        <li><a href="/first">first page</a></li>
+        <li><a href="/second">second page</a></li>
+        <li><a href="/third">third page</a></li>
+      </ul>
+      <img src="./assets/logo.png">
+      <h1>{{ msg }}</h1>
+    </div>
   </div>
 </template>
 
@@ -41,14 +31,27 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  position: relative;
+  min-height: 100%;
+  .left-container {
+    position: relative;
+    z-index: 99;
+  }
+  .right-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 1080px;
+    position: relative;
+  }
 }
 
 h1, h2 {
