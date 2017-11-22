@@ -3,8 +3,9 @@
     <div class="top-logo">
     </div>
     <el-menu
-      default-active="2"
       class="el-menu-vertical-demo"
+      :router="true"
+      :default-active="$route.path"
       @open="handleOpen"
       @close="handleClose">
       <el-submenu index="1">
@@ -13,25 +14,19 @@
           <span>导航一</span>
         </template>
         <el-menu-item-group>
-          <template slot="title">分组一</template>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
+          <el-menu-item index="first">页面1</el-menu-item>
+          <el-menu-item index="second">页面2</el-menu-item>
         </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3">选项3</el-menu-item>
+          <el-menu-item index="third">页面3</el-menu-item>
         </el-menu-item-group>
-        <el-submenu index="1-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="1-4-1">选项1</el-menu-item>
-        </el-submenu>
       </el-submenu>
-      <el-menu-item index="2">
+      <el-menu-item index="zhengcechuangzhi">
         <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
+        <span slot="title">政策创制</span>
       </el-menu-item>
-      <el-menu-item index="3">
+      <el-menu-item index="xingzhengjigou">
         <i class="el-icon-setting"></i>
-        <span slot="title">导航三</span>
+        <span slot="title">行政机构</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -41,11 +36,17 @@
   .el-menu{
     width: 200px;
     min-height: 400px;
+    .el-submenu {
+      .el-menu {
+        min-height: auto;
+      } 
+    }
   }
   .top-logo {
     width:200px;
     height:65px;
     background: #ffffff url(./assets/images/swchina_logo.png) no-repeat 50%;
+    background-size: 95%;
   }
 </style>
 
@@ -57,6 +58,7 @@
     },
     methods: {
       handleOpen(key, keyPath) {
+
         console.log(key, keyPath);
       },
       handleClose(key, keyPath) {

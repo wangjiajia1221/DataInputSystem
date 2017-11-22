@@ -10,8 +10,6 @@
         <li><a href="/second">second page</a></li>
         <li><a href="/third">third page</a></li>
       </ul>
-      <img src="./assets/logo.png">
-      <h1>{{ msg }}</h1>
     </div>
   </div>
 </template>
