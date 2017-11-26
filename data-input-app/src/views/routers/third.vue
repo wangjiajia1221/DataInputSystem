@@ -35,9 +35,9 @@ export default {
       };
       service.request(config)
       .then(data => {
-        resolve(data);
+        console.log(data);
       }, err => {
-        resolve(err);
+        console.log(err);
       });
     }
   }
