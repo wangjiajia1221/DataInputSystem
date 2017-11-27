@@ -1,14 +1,17 @@
 var path = require('path')
 var webpack = require('webpack')
-
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+var htmlWebpackPlugin = require('html-webpack-plugin');
+var extractTextWebpackPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-  entry: './src/main.js',
+  entry: {
+    app: './src/main.js'
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: '[name].js',
+    chunkFilename: "[id].chunk.js?[hash:8]"
   },
   module: {
     rules: [
@@ -27,22 +30,25 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
+      test: /\.less$/,
+      loader: 'style-loader!css-loader!less-loader'
       },
-  	  {
-    		test: /\.less$/,
-    		loader: "style-loader!css-loader!less-loader",
+      {
+        test: /\.less$/,
+        loader: extractTextWebpackPlugin.extract("style-loader", "css-loader!less-loader")
+        // 配合‘extract-text-webpack-plugin'可以剥离，css
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'},
+        loader: 'style-loader!css-loader'
+      },
       {
-        test: /\.(eot|woff|woff2|ttf)([\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\?]?.*)$/,
-        loader: "file-loader"
+        test: /\.(png|jpg|gif|woff|woff2|ttf|eot|svg)$/,
+        loader: 'url-loader?limite=8192'  // limit 是转换base64的文件大小的阀值8兆
+      },
+      {
+        test: /\.html$/,
+        loader: 'html-loader'  // 可以用来加载模板
       }
     ]
   },
@@ -62,7 +68,19 @@ module.exports = {
   },
   devtool: '#eval-source-map',
   plugins: [
-    new ExtractTextPlugin("styles.css"),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'common',
+      filename: '[name].[hash].js',
+      chunks: ['index', 'common']  // extract commonChunk from index & common
+    }),
+    new htmlWebpackPlugin({
+      template: './index.html',
+      filename: 'index.html',
+      chunks: ['index', 'common']
+    }),
+    new extractTextWebpackPlugin("style.css", {
+      allChunks: true
+    })
   ]
 }
 
