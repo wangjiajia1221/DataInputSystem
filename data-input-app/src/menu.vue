@@ -20,11 +20,11 @@
           <el-menu-item index="third">页面3</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="zhengcechuangzhi">
+      <el-menu-item index="/zhengcechuangzhi">
         <i class="el-icon-menu"></i>
         <span slot="title">政策创制</span>
       </el-menu-item>
-      <el-menu-item index="xingzhengjigou">
+      <el-menu-item index="/xingzhengjigou">
         <i class="el-icon-setting"></i>
         <span slot="title">行政机构</span>
       </el-menu-item>

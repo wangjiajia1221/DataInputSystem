@@ -1,83 +1,87 @@
 <template>
   <div>
-    <div class="top-container">
-      <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
-    </div>
-    <el-dialog
-      title="添加数据"
-      :visible.sync="dialogVisible"
-      width="30%"
-    >
-      <el-form :model="formData">
-        <el-form-item v-show="false">
-          <el-input auto-complete="off" v-model="formData.id"></el-input>
-        </el-form-item>
-        <el-form-item label="省/直辖市:" label-width="100px">
-          <el-select placeholder="请选择省/直辖市" v-model="formData.province">
-            <el-option label="上海市" value="上海市"></el-option>
-            <el-option label="北京市" value="北京市"></el-option>
-            <el-option label="河北省" value="河北省"></el-option>
-            <el-option label="内蒙古自治区" value="内蒙古自治区"></el-option>
-            <el-option label="辽宁省" value="辽宁省"></el-option>
-            <el-option label="陕西省" value="陕西省"></el-option>
-            <el-option label="黑龙江省" value="黑龙江省"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="文件名:" label-width="100px">
-          <el-input auto-complete="off" v-model="formData.docName"></el-input>
-        </el-form-item>
-        <el-form-item label="文号:" label-width="100px">
-          <el-input auto-complete="off" v-model="formData.docRef"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirmAdd" v-if="action=='add'">确 定</el-button>
-        <el-button type="primary" @click="confirmEdit" v-if="action=='edit'">确 定</el-button>
-      </div>
-    </el-dialog>
-    <el-table
-    :data="tableData"
-    border
-    show-summary
-    style="width: 95%;margin-left:20px">
-      <el-table-column
-        width="50"
-        label="序号">
-        <template slot-scope="scope">{{ scope.$index + 1 }}</template>
-      </el-table-column>
-      <el-table-column
-        prop="province"
-        sortable
-        label="省/直辖市">
-      </el-table-column>
-      <el-table-column
-        prop="docName"
-        sortable
-        label="社会工作政策">
-      </el-table-column>
-      <el-table-column
-        prop="docRef"
-        sortable
-        label="文号">
-      </el-table-column>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <el-tabs v-model="defaultYear" type="card">
+      <el-tab-pane label="2017年" name="2017">
+        <div class="top-container">
+          <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
+        </div>
+        <el-dialog
+          title="添加数据"
+          :visible.sync="dialogVisible"
+          width="40%"
+        >
+          <el-form :model="formData">
+            <el-form-item v-show="false">
+              <el-input auto-complete="off" v-model="formData.id"></el-input>
+            </el-form-item>
+            <el-form-item label="省/直辖市:" label-width="100px">
+              <el-select placeholder="请选择省/直辖市" v-model="formData.province">
+                <el-option
+                  v-for="province in provinces"
+                  :key="province.name"
+                  :label="province.name_cn"
+                  :value="province.name">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="文件名:" label-width="100px">
+              <el-input auto-complete="off" v-model="formData.docName"></el-input>
+            </el-form-item>
+            <el-form-item label="文号:" label-width="100px">
+              <el-input auto-complete="off" v-model="formData.docRef"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="confirmAdd" v-if="action=='add'">确 定</el-button>
+            <el-button type="primary" @click="confirmEdit" v-if="action=='edit'">确 定</el-button>
+          </div>
+        </el-dialog>
+        <el-table
+        :data="tableData"
+        border
+        show-summary
+        style="width: 95%;margin-left:20px">
+          <el-table-column
+            width="50"
+            label="序号">
+            <template slot-scope="scope">{{ scope.$index + 1 }}</template>
+          </el-table-column>
+          <el-table-column
+            prop="province"
+            sortable
+            label="省/直辖市">
+          </el-table-column>
+          <el-table-column
+            prop="docName"
+            sortable
+            label="社会工作政策">
+          </el-table-column>
+          <el-table-column
+            prop="docRef"
+            sortable
+            label="文号">
+          </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script>
 import DataProvider from '@bbfe/data-provider';
+import provinces from '../../config/provinces'
 
 let service = new DataProvider();
 export default {
@@ -90,12 +94,16 @@ export default {
         docName:null,
         docRef:null
       },
+      provinces: provinces.provinces,
       dialogVisible: false,
-      action: 'add'
+      action: 'add',
+      defaultYear: '2017'
     }
   },
   mounted () {
     this.getData();
+    // console.log('provinces',provinces.provinces);
+    // console.log('this', this)
   },
   methods: {
     getData () {
@@ -119,8 +127,17 @@ export default {
         console.log(err);
       });
     },
+    resetForm () {
+      this.formData = {
+        id: null,
+        province: null,
+        docName:null,
+        docRef:null
+      }
+    },
     handleEdit (index, rowData) {
       console.log(index, rowData)
+      this.resetForm();
       this.action = 'edit';
       Object.keys(this.formData).forEach(item => {
         this.formData[item] = rowData[item];
@@ -166,6 +183,7 @@ export default {
       });
     },
     handleAdd () {
+      this.resetForm();
       this.action = 'add';
       this.dialogVisible = true;
     },
@@ -251,7 +269,7 @@ export default {
   .el-form-item{
     margin-left: 30px;
     .el-form-item__content {
-      width: 300px;
+      width: 60%;
       text-align: left;
     }
   }

@@ -25,6 +25,10 @@ const Router = [
     {
       path: '/xingzhengjigou',
       component: Xingzhengjigou
+    },
+    {
+      path: '/',
+      redirect: '/zhengcechuangzhi' 
     }
   ]
 

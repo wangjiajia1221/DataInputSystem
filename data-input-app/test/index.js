@@ -1,10 +1,12 @@
 import Mock from 'mockjs';
+import provinces from './provinces';
 
 let BASE_URL = '/api/v1';
 let MockConf = {
 	'/mock/get': {
 		a: 'aha'
 	},
+  '/provinces/get': provinces,
 	'/zhengcechuangzhi/get': {'data': [
     {
       'id': 1,
@@ -95,7 +97,65 @@ let MockConf = {
     id: 33
   },
   '/zhengcechuangzhi/update': {},
-  '/zhengcechuangzhi/delete': {}
+  '/zhengcechuangzhi/delete': {},
+  '/xingzhengjigou/get': {
+    'data': [{
+      'id': 1,
+      'province': '北京',
+      'level': '地市级',
+      'independent': '昌平区、东城区',
+      'relate': '大兴区、延庆区、顺义区、密云县'
+    },
+    {
+      'id': 2,
+      'province': '天津',
+      'level': '地市级',
+      'independent': '南开区',
+      'relate': '无'
+    },
+    {
+      'id': 3,
+      'province': '河北省',
+      'level': '地市级',
+      'independent': '保定',
+      'relate': '石家庄、承德、张家口、秦皇岛、唐山、沧州、廊坊、衡水、邢台、邯郸'
+    },
+    {
+      'id': 4,
+      'province': '河北省',
+      'level': '县级',
+      'independent': '无',
+      'relate': '无'
+    },
+    {
+      'id': 5,
+      'province': '山西省',
+      'level': '地市级',
+      'independent': '吕梁市',
+      'relate': '太原市、大同市、长治市、阳泉市'
+    },{
+      'id': 6,
+      'province': '山西省',
+      'level': '县级级',
+      'independent': '无',
+      'relate': '无'
+    },{
+      'id': 7,
+      'province': '内蒙古自治区',
+      'level': '地市级',
+      'independent': '呼和浩特市、包头市、鄂尔多斯市',
+      'relate': '锡林郭勒盟'
+    },{
+      'id': 8,
+      'province': '内蒙古自治区',
+      'level': '县级',
+      'independent': '鄂尔多斯市东胜区、康巴什区、伊金霍洛旗、达拉特旗、杭锦旗、鄂托克前旗；包头市昆区、青山区、土右旗',
+      'relate': '包头市东河区、达茂旗、高新区、石拐区、白云区；鄂尔多斯市乌审旗、鄂旗'
+    }]
+  },
+  '/xingzhengjigou/add': {id: 33},
+  '/xingzhengjigou/update': {},
+  '/xingzhengjigou/delete': {}
 }
 
 Object.keys(MockConf).forEach((url) => {
