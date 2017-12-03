@@ -10,11 +10,11 @@
           :visible.sync="dialogVisible"
           width="40%"
         >
-          <el-form :model="formData">
+          <el-form :model="formData" ref="formData">
             <el-form-item v-show="false">
               <el-input auto-complete="off" v-model="formData.id"></el-input>
             </el-form-item>
-            <el-form-item label="省/直辖市:" label-width="100px">
+            <el-form-item label="省（区、市）:" label-width="100px">
               <el-select placeholder="请选择省/直辖市" v-model="formData.province">
                 <el-option
                   v-for="province in provinces"
@@ -24,17 +24,25 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="级别:" label-width="100px">
-              <el-select placeholder="请选择级别" v-model="formData.level">
-                <el-option label="地市级" value="地市级"></el-option>
-                <el-option label="县级" value="县级"></el-option>
-              </el-select>
+            <el-form-item
+              label="2017总数量:"
+              label-width="100px"
+              prop="total"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.total"></el-input>
             </el-form-item>
-            <el-form-item label="独立设立的市(区县):" label-width="100px">
-              <el-input auto-complete="off" v-model="formData.independent"></el-input>
-            </el-form-item>
-            <el-form-item label="相关加挂的市(区县):" label-width="100px">
-              <el-input auto-complete="off" v-model="formData.relate"></el-input>
+            <el-form-item
+              label="年增长数量:"
+              prop="increase"
+              label-width="100px"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.increase"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -56,22 +64,17 @@
           <el-table-column
             prop="province"
             sortable
-            label="省/直辖市">
+            label="省（区、市）">
           </el-table-column>
           <el-table-column
-            prop="level"
+            prop="total"
             sortable
-            label="级别">
+            label="2015年总数量(个)">
           </el-table-column>
           <el-table-column
-            prop="independent"
+            prop="increase"
             sortable
-            label="设立相对独立的社会工作处室（科、股）的市（区、县）">
-          </el-table-column>
-          <el-table-column
-            prop="relate"
-            sortable
-            label="在相关处室加挂社会工作处室（科、股）牌子的市（区、县）">
+            label="年度增长数量(个)">
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
@@ -102,9 +105,8 @@ export default {
       formData: {
         id: null,
         province: null,
-        level: null,
-        independent: null,
-        relate: null
+        total: null,
+        increase: null
       },
       dialogVisible: false,
       action: 'add',
@@ -123,7 +125,7 @@ export default {
         baseURL: '/api/v1',
         // 请求参数以jquery.param方式进行序列化
         paramSerializerJQLikeEnabled: true,
-        url: '/xingzhengjigou/get',
+        url: '/gangwei/get',
         // to methods of that instance.
         method: 'get',
         // params仅用于get请求， 会拼接在url后面
@@ -141,9 +143,8 @@ export default {
       this.formData = {
         id: null,
         province: null,
-        level: null,
-        independent: null,
-        relate: null
+        cities: null,
+        counties: null
       }
     },
     handleEdit (index, rowData) {
@@ -165,7 +166,7 @@ export default {
         let config = {
           baseURL: '/api/v1',
           paramSerializerJQLikeEnabled: true,
-          url: '/xingzhengjigou/delete',
+          url: '/gangwei/delete',
           method: 'post',
           data: rowData.id
         };
@@ -205,40 +206,44 @@ export default {
         baseURL: '/api/v1',
         // 请求参数以jquery.param方式进行序列化
         paramSerializerJQLikeEnabled: true,
-        url: '/xingzhengjigou/add',
+        url: '/gangwei/add',
         // to methods of that instance.
         method: 'post',
         // data仅用于post请求， 放在http请求体中
         data: data
       };
-      service.request(config)
-      .then(data => {
-        console.log(data);
-        if (data.id) {
-          this.$message({
-            message: '添加成功',
-            type: 'success'
-          });
-          this.formData.id = data.id;
-          this.tableData.unshift(this.formData);
-          this.dialogVisible = false;
-        } else {
-          this.$message({
-            message: '添加失败',
-            type: 'error'
+       this.$refs['formData'].validate((valid) => {
+        if (valid) {
+          service.request(config)
+          .then(data => {
+            console.log(data);
+            if (data.id) {
+              this.$message({
+                message: '添加成功',
+                type: 'success'
+              });
+              this.formData.id = data.id;
+              this.tableData.unshift(this.formData);
+              this.dialogVisible = false;
+            } else {
+              this.$message({
+                message: '添加失败',
+                type: 'error'
+              });
+            }
+            
+          }, err => {
+            console.log(err);
           });
         }
-        
-      }, err => {
-        console.log(err);
-      });
+      })
     },
     confirmEdit () {
       let data = this.formData;
       let config = {
         baseURL: '/api/v1',
         paramSerializerJQLikeEnabled: true,
-        url: '/xingzhengjigou/update',
+        url: '/gangwei/update',
         method: 'post',
         data: data
       };

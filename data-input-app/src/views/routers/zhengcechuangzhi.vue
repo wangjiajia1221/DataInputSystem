@@ -20,7 +20,7 @@
                   v-for="province in provinces"
                   :key="province.name"
                   :label="province.name_cn"
-                  :value="province.name">
+                  :value="province.name_cn">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     getData () {
-      let params = {a:1,b:'get'};
+      let params = {};
       let config = {
         // api请求的baseURL, 用于DataSourceGateWay
         baseURL: '/api/v1',

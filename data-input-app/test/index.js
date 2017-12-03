@@ -155,7 +155,10 @@ let MockConf = {
   },
   '/xingzhengjigou/add': {id: 33},
   '/xingzhengjigou/update': {},
-  '/xingzhengjigou/delete': {}
+  '/xingzhengjigou/delete': {},
+  '/hangyexiehui/add': {id: 33},
+  '/gangwei/add': {id: 33},
+  '/fuwuzhandian/add': {id: 33},
 }
 
 Object.keys(MockConf).forEach((url) => {
