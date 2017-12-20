@@ -2,8 +2,11 @@
   <div>
     <el-tabs v-model="defaultYear" type="card">
       <el-tab-pane label="2017年" name="2017">
-        <div class="top-container">
+        <div class="top-add">
           <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
+        </div>
+        <div class="top-container">
+          <el-tag type="success">出台社会工作政策情况统计表</el-tag>
         </div>
         <el-dialog
           title="添加数据"
@@ -30,6 +33,9 @@
             <el-form-item label="文号:" label-width="100px">
               <el-input auto-complete="off" v-model="formData.docRef"></el-input>
             </el-form-item>
+            <el-form-item label="发文单位:" label-width="100px">
+              <el-input auto-complete="off" v-model="formData.creator"></el-input>
+            </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
@@ -55,12 +61,22 @@
           <el-table-column
             prop="docName"
             sortable
-            label="社会工作政策">
+            label="文件名称">
           </el-table-column>
           <el-table-column
             prop="docRef"
             sortable
-            label="文号">
+            label="发文文号">
+          </el-table-column>
+          <el-table-column
+            prop="creator"
+            sortable
+            label="发文单位">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            sortable
+            label="发文时间">
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
@@ -91,8 +107,9 @@ export default {
       formData: {
         id: null,
         province: null,
-        docName:null,
-        docRef:null
+        docName: null,
+        docRef: null,
+        creator: null
       },
       provinces: provinces.provinces,
       dialogVisible: false,
@@ -259,13 +276,7 @@ export default {
 }
 
 </script>
-<style lang="less">
-  .top-container {
-    height:80px;
-    line-height:80px;
-    text-align:left;
-    padding-left:20px;
-  }
+<style lang="less" scoped>
   .el-form-item{
     margin-left: 30px;
     .el-form-item__content {

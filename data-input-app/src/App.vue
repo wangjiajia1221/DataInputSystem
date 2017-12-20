@@ -49,6 +49,20 @@ export default {
     flex-direction: column;
     min-width: 1080px;
     position: relative;
+    .top-add {
+      height:50px;
+      line-height:50px;
+      text-align:left;
+      padding-left:20px;
+    }
+    .top-container {
+      line-height: 50px;
+      .el-tag {
+        position: relative;
+        font-size: 20px;
+        letter-spacing: 8px;
+      }
+    }
   }
 }
 
