@@ -16,7 +16,8 @@
  }
 1.2、新增表1数据（参数为formdata）
 '/zhengcechuangzhi/add': {
-    'id': 33
+    'id': 33,
+    'province': '北京市'
   }
 1.3、修改表1数据（参数为formdata）
   '/zhengcechuangzhi/update': {}
@@ -35,7 +36,7 @@
     }],
     'total': 88
 }
-2.2 '/xingzhengjigou/add': {id: 33}
+2.2 '/xingzhengjigou/add': {id: 33, 'province': '北京市'}
 2.3 '/xingzhengjigou/update': {}
 2.4 '/xingzhengjigou/delete': {}
 
@@ -52,7 +53,7 @@
     }],
     'total': 88
 }
-3.2 '/gangwei/add': {id: 33}
+3.2 '/gangwei/add': {id: 33, 'province': '北京市'}
 3.3 '/gangwei/update': {}
 3.4 '/gangwei/delete': {}
 
@@ -67,7 +68,7 @@
     }],
     'total': 88
 }
-4.2 '/rencaiziyuan/add': {id: 33}
+4.2 '/rencaiziyuan/add': {id: 33, 'province': '北京市'}
 4.3 '/rencaiziyuan/update': {}
 4.4 '/rencaiziyuan/delete': {}
 
@@ -81,7 +82,7 @@
     }],
     'total': 88
 }
-5.2 '/rencaipeixun/add': {id: 33}
+5.2 '/rencaipeixun/add': {id: 33, 'province': '北京市'}
 5.3 '/rencaipeixun/update': {}
 5.4 '/rencaipeixun/delete': {}
 
@@ -96,7 +97,7 @@
     }],
     'total': 88
 }
-6.2 '/hangyexiehui/add': {id: 33}
+6.2 '/hangyexiehui/add': {id: 33, 'province': '北京市'}
 6.3 '/hangyexiehui/update': {}
 6.4 '/hangyexiehui/delete': {}
 
@@ -115,7 +116,7 @@
     }],
     'total': 88
 }
-7.2 '/minbanjigou/add': {id: 33}
+7.2 '/minbanjigou/add': {id: 33, 'province': '北京市'}
 7.3 '/minbanjigou/update': {}
 7.4 '/minbanjigou/delete': {}
 
@@ -130,7 +131,7 @@
     }],
     'total': 88
 }
-8.2 '/zijintouru/add': {id: 33}
+8.2 '/zijintouru/add': {id: 33, 'province': '北京市'}
 8.3 '/zijintouru/update': {}
 8.4 '/zijintouru/delete': {}
 
@@ -146,7 +147,7 @@
     }],
     'total': 88
 }
-9.2 '/shehuishidian/add': {id: 33}
+9.2 '/shehuishidian/add': {id: 33, 'province': '北京市'}
 9.3 '/shehuishidian/update': {}
 9.4 '/shehuishidian/delete': {}
 
@@ -162,7 +163,7 @@
     }],
     'total': 88
 }
-10.2 '/zyfwzhengce/add': {id: 33}
+10.2 '/zyfwzhengce/add': {id: 33, 'province': '北京市'}
 10.3 '/zyfwzhengce/update': {}
 10.4 '/zyfwzhengce/delete': {}
 
@@ -180,7 +181,7 @@
     }],
     'total': 88
 }
-11.2 '/zyfwzuzhi/add': {id: 33}
+11.2 '/zyfwzuzhi/add': {id: 33, 'province': '北京市'}
 11.3 '/zyfwzuzhi/update': {}
 11.4 '/zyfwzuzhi/delete': {}
 
@@ -196,7 +197,7 @@
     }],
     'total': 88
 }
-12.2 '/zyzzhuce/add': {id: 33}
+12.2 '/zyzzhuce/add': {id: 33, 'province': '北京市'}
 12.3 '/zyzzhuce/update': {}
 12.4 '/zyzzhuce/delete': {}
 
@@ -212,7 +213,7 @@
     }],
     'total': 88
 }
-13.2 '/zyzpeixun/add': {id: 33}
+13.2 '/zyzpeixun/add': {id: 33, 'province': '北京市'}
 13.3 '/zyzpeixun/update': {}
 13.4 '/zyzpeixun/delete': {}
 
@@ -229,7 +230,7 @@
     }],
     'total': 88
 }
-14.2 '/jilugongzuo/add': {id: 33}
+14.2 '/jilugongzuo/add': {id: 33, 'province': '北京市'}
 14.3 '/jilugongzuo/update': {}
 14.4 '/jilugongzuo/delete': {}
 
@@ -244,7 +245,7 @@
     }],
     'total': 88
 }
-15.2 '/huodongkaizhan/add': {id: 33}
+15.2 '/huodongkaizhan/add': {id: 33, 'province': '北京市'}
 15.3 '/huodongkaizhan/update': {}
 15.4 '/huodongkaizhan/delete': {}
 
@@ -259,7 +260,7 @@
     }],
     'total': 88
 }
-16.2 '/jilibaozhang/add': {id: 33}
+16.2 '/jilibaozhang/add': {id: 33, 'province': '北京市'}
 16.3 '/jilibaozhang/update': {}
 16.4 '/jilibaozhang/delete': {}
 
@@ -278,7 +279,7 @@
     }],
     'total': 88
 }
-17.2 '/zyfwzijin/add': {id: 33}
+17.2 '/zyfwzijin/add': {id: 33, 'province': '北京市'}
 17.3 '/zyfwzijin/update': {}
 17.4 '/zyfwzijin/delete': {}
 
