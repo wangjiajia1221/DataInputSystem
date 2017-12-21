@@ -14,20 +14,17 @@
             <el-form-item v-show="false">
               <el-input auto-complete="off" v-model="formData.id"></el-input>
             </el-form-item>
-            <el-form-item label="省（区、市）:" label-width="100px">
-              <el-select placeholder="请选择省/直辖市" v-model="formData.province">
-                <el-option
-                  v-for="province in provinces"
-                  :key="province.name"
-                  :label="province.name_cn"
-                  :value="province.name_cn">
-                </el-option>
+            <el-form-item label="级别:" label-width="100px">
+              <el-select placeholder="请选择级别" v-model="formData.level">
+                <el-option label="在省级民政部门登记的" value="在省级民政部门登记的"></el-option>
+                <el-option label="在地市级民政部门登记的" value="在地市级民政部门登记的"></el-option>
+                <el-option label="在县区级民政部门登记的" value="在县区级民政部门登记的"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item
-              label="地市级数量:"
+              label="行业协会数量:"
               label-width="100px"
-              prop="cities"
+              prop="xiehuiNum"
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
@@ -35,8 +32,8 @@
               <el-input auto-complete="off" v-model.number="formData.cities"></el-input>
             </el-form-item>
             <el-form-item
-              label="县级数量:"
-              prop="counties"
+              label="成立党组织数量:"
+              prop="orgNum"
               label-width="100px"
               :rules="[
                 { required: true, message: '数量不能为空'},
@@ -67,14 +64,19 @@
             label="省（区、市）">
           </el-table-column>
           <el-table-column
-            prop="cities"
+            prop="level"
             sortable
-            label="地市级社会工作协会数量(个)">
+            label="级别">
           </el-table-column>
           <el-table-column
-            prop="counties"
+            prop="xiehuiNum"
             sortable
-            label="县级社会工作协会数量(个)">
+            label="社会工作行业协会数量（个）">
+          </el-table-column>
+          <el-table-column
+            prop="orgNum"
+            sortable
+            label="成立党组织数量(个)">
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
@@ -105,8 +107,9 @@ export default {
       formData: {
         id: null,
         province: null,
-        cities: null,
-        counties: null
+        level: null,
+        xiehuiNum: null,
+        orgNum: null
       },
       dialogVisible: false,
       action: 'add',
@@ -136,7 +139,7 @@ export default {
         console.log(data);
         this.tableData = data.data;
       }, err => {
-        console.log(err);
+        this.$alert(err.message);
       });
     },
     resetForm () {
@@ -185,7 +188,7 @@ export default {
             });
           }
         }, err => {
-          console.log(err);
+          this.$alert(err.message);
         });
       }).catch(() => {
         this.$message({
@@ -223,6 +226,7 @@ export default {
                 type: 'success'
               });
               this.formData.id = data.id;
+              this.formData.province = data.province;
               this.tableData.unshift(this.formData);
               this.dialogVisible = false;
             } else {
@@ -231,9 +235,8 @@ export default {
                 type: 'error'
               });
             }
-            
           }, err => {
-            console.log(err);
+            this.$alert(err.message);
           });
         }
       })
@@ -268,7 +271,7 @@ export default {
           });
         }
       }, err => {
-        console.log(err);
+        this.$alert(err.message);
       });
     }
   }
@@ -276,12 +279,6 @@ export default {
 
 </script>
 <style lang="less">
-  .top-container {
-    height:80px;
-    line-height:80px;
-    text-align:left;
-    padding-left:20px;
-  }
   .el-form-item{
     margin-left: 30px;
     .el-form-item__content {

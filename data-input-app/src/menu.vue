@@ -22,37 +22,33 @@
             <i class="el-icon-setting"></i>
             <span slot="title">行政机构</span>
           </el-menu-item>
-          <el-menu-item index="/hangyexiehui">
-            <i class="el-icon-setting"></i>
-            <span slot="title">行业协会</span>
-          </el-menu-item>
           <el-menu-item index="/gangwei">
             <i class="el-icon-setting"></i>
             <span slot="title">岗位</span>
           </el-menu-item>
-          <el-menu-item index="/fuwuzhandian">
+          <el-menu-item index="/rencaiziyuan">
             <i class="el-icon-setting"></i>
-            <span slot="title">服务站点</span>
+            <span slot="title">人才资源</span>
           </el-menu-item>
-          <el-menu-item index="/shehuigongzuojigou">
+          <el-menu-item index="/rencaipeixun">
             <i class="el-icon-setting"></i>
-            <span slot="title">社会工作机构</span>
+            <span slot="title">人才培训</span>
           </el-menu-item>
-          <el-menu-item index="/peixun">
+          <el-menu-item index="/hangyexiehui">
             <i class="el-icon-setting"></i>
-            <span slot="title">培训</span>
+            <span slot="title">行业协会</span>
           </el-menu-item>
-          <el-menu-item index="/zhiyeshuipingkaoshi">
+          <el-menu-item index="/mibanjigou">
             <i class="el-icon-setting"></i>
-            <span slot="title">职业水平考试</span>
+            <span slot="title">民办机构</span>
           </el-menu-item>
           <el-menu-item index="/zijintouru">
             <i class="el-icon-setting"></i>
             <span slot="title">资金投入</span>
           </el-menu-item>
-          <el-menu-item index="/xinxixitong">
+          <el-menu-item index="/shehuishidian">
             <i class="el-icon-setting"></i>
-            <span slot="title">信息系统</span>
+            <span slot="title">社会试点</span>
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
@@ -62,9 +58,38 @@
           <span>志愿服务</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="first">页面1</el-menu-item>
-          <el-menu-item index="second">页面2</el-menu-item>
-          <el-menu-item index="third">页面3</el-menu-item>
+          <el-menu-item index="/zyfwzhengce">
+            <i class="el-icon-setting"></i>
+            <span slot="title">政策创制</span>
+          </el-menu-item>
+          <el-menu-item index="/zyfwzuzhi">
+            <i class="el-icon-setting"></i>
+            <span slot="title">志愿服务组织</span>
+          </el-menu-item>
+          <el-menu-item index="/zyzzhuce">
+            <i class="el-icon-setting"></i>
+            <span slot="title">志愿者注册</span>
+          </el-menu-item>
+          <el-menu-item index="/zyzpeixun">
+            <i class="el-icon-setting"></i>
+            <span slot="title">志愿者培训</span>
+          </el-menu-item>
+          <el-menu-item index="/jilugongzuo">
+            <i class="el-icon-setting"></i>
+            <span slot="title">记录工作</span>
+          </el-menu-item>
+          <el-menu-item index="/huodongkaizhan">
+            <i class="el-icon-setting"></i>
+            <span slot="title">活动开展</span>
+          </el-menu-item>
+          <el-menu-item index="/jilibaozhang">
+            <i class="el-icon-setting"></i>
+            <span slot="title">激励保障</span>
+          </el-menu-item>
+          <el-menu-item index="/zyfwzijin">
+            <i class="el-icon-setting"></i>
+            <span slot="title">资金投入</span>
+          </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       

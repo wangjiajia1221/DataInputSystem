@@ -17,7 +17,7 @@
             <el-form-item v-show="false">
               <el-input auto-complete="off" v-model="formData.id"></el-input>
             </el-form-item>
-            <el-form-item label="省/直辖市:" label-width="100px">
+            <!-- <el-form-item label="省/直辖市:" label-width="100px">
               <el-select placeholder="请选择省/直辖市" v-model="formData.province">
                 <el-option
                   v-for="province in provinces"
@@ -26,7 +26,7 @@
                   :value="province.name_cn">
                 </el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="文件名:" label-width="100px">
               <el-input auto-complete="off" v-model="formData.docName"></el-input>
             </el-form-item>
@@ -35,6 +35,14 @@
             </el-form-item>
             <el-form-item label="发文单位:" label-width="100px">
               <el-input auto-complete="off" v-model="formData.creator"></el-input>
+            </el-form-item>
+            <el-form-item label="发文时间:" label-width="100px">
+              <el-date-picker
+                v-model="formData.createTime"
+                type="date"
+                placeholder="选择日期"
+                value-format="yyyy-MM-dd">
+              </el-date-picker>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -109,7 +117,8 @@ export default {
         province: null,
         docName: null,
         docRef: null,
-        creator: null
+        creator: null,
+        creatTime: null
       },
       provinces: provinces.provinces,
       dialogVisible: false,
@@ -141,7 +150,7 @@ export default {
         console.log(data);
         this.tableData = data.data;
       }, err => {
-        console.log(err);
+        this.$alert(err.message);
       });
     },
     resetForm () {
@@ -171,7 +180,7 @@ export default {
         let config = {
           baseURL: '/api/v1',
           paramSerializerJQLikeEnabled: true,
-          url: '/zhengcechuangzhi/delete',
+          url: '/zhengcechuangzhi/dele',
           method: 'post',
           data: rowData.id
         };
@@ -190,7 +199,7 @@ export default {
             });
           }
         }, err => {
-          console.log(err);
+          this.$alert(err.message);
         });
       }).catch(() => {
         this.$message({
@@ -226,6 +235,7 @@ export default {
             type: 'success'
           });
           this.formData.id = data.id;
+          this.formData.province = data.province;
           this.tableData.unshift(this.formData);
           this.dialogVisible = false;
         } else {
@@ -233,10 +243,9 @@ export default {
             message: '添加失败',
             type: 'error'
           });
-        }
-        
+        }  
       }, err => {
-        console.log(err);
+        this.$alert(err.message);
       });
     },
     confirmEdit () {
@@ -269,7 +278,7 @@ export default {
           });
         }
       }, err => {
-        console.log(err);
+        this.$alert(err.message);
       });
     }
   }

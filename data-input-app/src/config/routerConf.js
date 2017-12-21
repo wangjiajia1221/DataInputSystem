@@ -30,16 +30,16 @@ const Router = [
       component: Xingzhengjigou
     },
     {
-      path: '/hangyexiehui',
-      component: Hangyexiehui
-    },
-    {
       path: '/gangwei',
       component: Gangwei
     },
     {
       path: '/fuwuzhandian',
       component: Fuwuzhandian
+    },
+    {
+      path: '/hangyexiehui',
+      component: Hangyexiehui
     },
     {
       path: '/',

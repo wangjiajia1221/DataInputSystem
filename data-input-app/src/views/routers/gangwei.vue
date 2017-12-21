@@ -2,8 +2,11 @@
   <div>
     <el-tabs v-model="defaultYear" type="card">
       <el-tab-pane label="2017年" name="2017">
-        <div class="top-container">
+        <div class="top-add">
           <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
+        </div>
+        <div class="top-container">
+          <el-tag type="success">社会工作岗位开发设置情况统计表</el-tag>
         </div>
         <el-dialog
           title="添加数据"
@@ -14,7 +17,7 @@
             <el-form-item v-show="false">
               <el-input auto-complete="off" v-model="formData.id"></el-input>
             </el-form-item>
-            <el-form-item label="省（区、市）:" label-width="100px">
+            <!-- <el-form-item label="省（区、市）:" label-width="100px">
               <el-select placeholder="请选择省/直辖市" v-model="formData.province">
                 <el-option
                   v-for="province in provinces"
@@ -23,26 +26,46 @@
                   :value="province.name_cn">
                 </el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item
-              label="2017总数量:"
+              label="岗位数量（个）:"
               label-width="100px"
-              prop="total"
+              prop="gangweiNum"
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.total"></el-input>
+              <el-input auto-complete="off" v-model.number="formData.gangweiNum"></el-input>
             </el-form-item>
             <el-form-item
-              label="年增长数量:"
-              prop="increase"
+              label="社会工作服务站（室、中心）设置情况（个）:"
+              prop="fuwuzhanNum"
               label-width="100px"
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.increase"></el-input>
+              <el-input auto-complete="off" v-model.number="formData.fuwuzhanNum"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="虽未明确为社会工作岗位，但实际岗位职责包括社会工作的（个）:"
+              prop="otherNum"
+              label-width="100px"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.otherNum"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="已取得社会工作学历学位、职业资格或培训证书，但未从事社会工作的（人）:"
+              prop="nojobNum"
+              label-width="100px"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.nojobNum"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -67,14 +90,24 @@
             label="省（区、市）">
           </el-table-column>
           <el-table-column
-            prop="total"
+            prop="gangweiNum"
             sortable
-            label="2015年总数量(个)">
+            label="岗位数量（个）">
           </el-table-column>
           <el-table-column
-            prop="increase"
+            prop="fuwuzhanNum"
             sortable
-            label="年度增长数量(个)">
+            label="社会工作服务站（室、中心）设置情况（个）">
+          </el-table-column>
+          <el-table-column
+            prop="otherNum"
+            sortable
+            label="虽未明确为社会工作岗位，但实际岗位职责包括社会工作的（个）">
+          </el-table-column>
+          <el-table-column
+            prop="nojobNum"
+            sortable
+            label="已取得社会工作学历学位、职业资格或培训证书，但未从事社会工作的（人）">
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
@@ -105,8 +138,10 @@ export default {
       formData: {
         id: null,
         province: null,
-        total: null,
-        increase: null
+        gangweiNum: null, 
+        fuwuzhanNum: null,
+        otherNum: null,
+        nojobNum: null
       },
       dialogVisible: false,
       action: 'add',
@@ -136,7 +171,7 @@ export default {
         console.log(data);
         this.tableData = data.data;
       }, err => {
-        console.log(err);
+        this.$alert(err.message);
       });
     },
     resetForm () {
@@ -185,7 +220,7 @@ export default {
             });
           }
         }, err => {
-          console.log(err);
+          this.$alert(err.message);
         });
       }).catch(() => {
         this.$message({
@@ -223,6 +258,7 @@ export default {
                 type: 'success'
               });
               this.formData.id = data.id;
+              this.formData.province = data.province;
               this.tableData.unshift(this.formData);
               this.dialogVisible = false;
             } else {
@@ -230,10 +266,9 @@ export default {
                 message: '添加失败',
                 type: 'error'
               });
-            }
-            
+            } 
           }, err => {
-            console.log(err);
+            this.$alert(err.message);
           });
         }
       })
@@ -268,7 +303,7 @@ export default {
           });
         }
       }, err => {
-        console.log(err);
+        this.$alert(err.message);
       });
     }
   }
@@ -276,12 +311,6 @@ export default {
 
 </script>
 <style lang="less">
-  .top-container {
-    height:80px;
-    line-height:80px;
-    text-align:left;
-    padding-left:20px;
-  }
   .el-form-item{
     margin-left: 30px;
     .el-form-item__content {

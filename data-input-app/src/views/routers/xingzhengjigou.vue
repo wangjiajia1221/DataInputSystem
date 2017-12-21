@@ -17,7 +17,7 @@
             <el-form-item v-show="false">
               <el-input auto-complete="off" v-model="formData.id"></el-input>
             </el-form-item>
-            <el-form-item label="省/直辖市:" label-width="100px">
+            <!-- <el-form-item label="省/直辖市:" label-width="100px">
               <el-select placeholder="请选择省/直辖市" v-model="formData.province">
                 <el-option
                   v-for="province in provinces"
@@ -26,6 +26,14 @@
                   :value="province.name_cn">
                 </el-option>
               </el-select>
+            </el-form-item> -->
+            <el-form-item label="类别:" label-width="100px">
+              <el-select placeholder="请选择类别" v-model="formData.type">
+                <el-option label="编制管理部门批准设立的社会工作处（科、股）" value="1"></el-option>
+                <el-option label="内部设立相对独立的社会工作处（科、股）" value="2"></el-option>
+                <el-option label="在相关处（科、股）加挂社会工作处（科、股）牌子" value="3"></el-option>
+                <el-option label="成立社会工作事业单位" value="4"></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="级别:" label-width="100px">
               <el-select placeholder="请选择级别" v-model="formData.level">
@@ -33,11 +41,8 @@
                 <el-option label="县级" value="县级"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="独立设立的市(区县):" label-width="100px">
-              <el-input auto-complete="off" v-model="formData.independent"></el-input>
-            </el-form-item>
             <el-form-item label="相关加挂的市(区县):" label-width="100px">
-              <el-input auto-complete="off" v-model="formData.relate"></el-input>
+              <el-input auto-complete="off" v-model="formData.orgNames"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -60,6 +65,16 @@
             prop="province"
             sortable
             label="省/直辖市">
+          </el-table-column>
+          <el-table-column
+            sortable
+            label="类别">
+            <template slot-scope="scope">
+              <span v-if="scope.row.type=='1'">编制管理部门批准设立的社会工作处（科、股）</span>
+              <span v-else-if="scope.row.type=='2'">内部设立相对独立的社会工作处（科、股）</span>
+              <span v-else-if="scope.row.type=='3'">在相关处（科、股）加挂社会工作处（科、股）牌子</span>
+              <span v-else-if="scope.row.type=='4'">成立社会工作事业单位</span>
+            </template>
           </el-table-column>
           <el-table-column
             prop="level"
@@ -106,8 +121,7 @@ export default {
         id: null,
         province: null,
         level: null,
-        independent: null,
-        relate: null
+        type: null,
       },
       dialogVisible: false,
       action: 'add',
@@ -137,7 +151,7 @@ export default {
         console.log(data);
         this.tableData = data.data;
       }, err => {
-        console.log(err);
+        this.$alert(err.message);
       });
     },
     resetForm () {
@@ -187,7 +201,7 @@ export default {
             });
           }
         }, err => {
-          console.log(err);
+          this.$alert(err.message);
         });
       }).catch(() => {
         this.$message({
@@ -223,6 +237,7 @@ export default {
             type: 'success'
           });
           this.formData.id = data.id;
+          this.formData.province = data.province;
           this.tableData.unshift(this.formData);
           this.dialogVisible = false;
         } else {
@@ -233,7 +248,7 @@ export default {
         }
         
       }, err => {
-        console.log(err);
+        this.$alert(err.message);
       });
     },
     confirmEdit () {
@@ -266,7 +281,7 @@ export default {
           });
         }
       }, err => {
-        console.log(err);
+        this.$alert(err.message);
       });
     }
   }

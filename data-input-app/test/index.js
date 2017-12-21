@@ -103,14 +103,14 @@ let MockConf = {
       'id': 1,
       'province': '北京',
       'level': '地市级',
-      'independent': '昌平区、东城区',
+      'type': '1',
       'relate': '大兴区、延庆区、顺义区、密云县'
     },
     {
       'id': 2,
       'province': '天津',
       'level': '地市级',
-      'independent': '南开区',
+      'type': '2',
       'relate': '无'
     },
     {
