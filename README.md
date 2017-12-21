@@ -166,24 +166,121 @@
 10.3 '/zyfwzhengce/update': {}
 10.4 '/zyfwzhengce/delete': {}
 
-11、表11接口：(志愿服务政策)
-11.1 '/zyfwzhengce/get': {
+11、表11接口：(志愿服务组织)
+11.1 '/zyfwzuzhi/get': {
     'data': [{
       'id': 1,
       'province': '北京',
-      'docName': '《关于加快XXXX的意见》',
-      'docRef': '（津团发〔2016〕73号）',
-      'creator': '发布单位',
-      'creatTime': '2017-12-21 09:55:33'
-    }],
+      'level': '地市级',
+      'areaName': 'xx市',
+      'shtt': 3,
+      'shfwjg': 4,
+      'jjh': 5,
+      'innerOrgNum': 4 //全省站点数通过前端计算得出
+    }],
     'total': 88
 }
-11.2 '/zyfwzhengce/add': {id: 33}
-11.3 '/zyfwzhengce/update': {}
-11.4 '/zyfwzhengce/delete': {}
+11.2 '/zyfwzuzhi/add': {id: 33}
+11.3 '/zyfwzuzhi/update': {}
+11.4 '/zyfwzuzhi/delete': {}
 
+12、表12接口：(志愿者注册)
+12.1 '/zyzzhuce/get': {
+    'data': [{
+      'id': 1,
+      'province': '北京',
+      'level': '地市级',
+      'total': 55,
+      'percent': 1%,
+      'sysNum': 4
+    }],
+    'total': 88
+}
+12.2 '/zyzzhuce/add': {id: 33}
+12.3 '/zyzzhuce/update': {}
+12.4 '/zyzzhuce/delete': {}
 
+13、表13接口：(志愿者注册)
+13.1 '/zyzpeixun/get': {
+    'data': [{
+      'id': 1,
+      'province': '北京',
+      'jbdw': '举办单位',
+      'pxbmc': '培训班名称',
+      'content': '培训内容' ,
+      'peixunNum': 34 //培训总人数由前端计算得出
+    }],
+    'total': 88
+}
+13.2 '/zyzpeixun/add': {id: 33}
+13.3 '/zyzpeixun/update': {}
+13.4 '/zyzpeixun/delete': {}
 
+14、表14接口：(记录工作)
+14.1 '/jilugongzuo/get': {
+    'data': [{
+      'id': 1,
+      'province': '北京',
+      'areaName': '地区名称',
+      'num1': 2,
+      'num2': 55,
+      'num3': 55,
+      'num4': 55,
+    }],
+    'total': 88
+}
+14.2 '/jilugongzuo/add': {id: 33}
+14.3 '/jilugongzuo/update': {}
+14.4 '/jilugongzuo/delete': {}
+
+15、表15接口：(活动开展)
+15.1 '/huodongkaizhan/get': {
+    'data': [{
+      'id': 1,
+      'province': '北京',
+      'totalHours': 44,
+      'oneYearHours': 22,
+      'activities': '省级重点志愿服务活动名称及简介',
+    }],
+    'total': 88
+}
+15.2 '/huodongkaizhan/add': {id: 33}
+15.3 '/huodongkaizhan/update': {}
+15.4 '/huodongkaizhan/delete': {}
+
+16、表16接口：(激励保障)
+16.1 '/jilibaozhang/get': {
+    'data': [{
+      'id': 1,
+      'province': '北京',
+      'czzj': 44, //财政资金投入
+      'fcj': 22, //福彩金投入
+      'measure': '本地区激励保障志愿者的主要政策措施',
+    }],
+    'total': 88
+}
+16.2 '/jilibaozhang/add': {id: 33}
+16.3 '/jilibaozhang/update': {}
+16.4 '/jilibaozhang/delete': {}
+
+17、表17接口：(资金投入)
+17.1 '/zyfwzijin/get': {
+    'data': [{
+      'id': 1,
+      'province': '北京',
+      'level': '省级层面',
+      'czzj': 22, //财政性资金
+      'cpgyj': 22, //彩票公益金
+      'qtzjComment': '其他资金陪住'
+      'qtzj': 22, //其他资金
+      'totalZj': 22, //年度总投入
+      'yyglzj': 22, //政府购买志愿服务运营管理的资金
+    }],
+    'total': 88
+}
+17.2 '/zyfwzijin/add': {id: 33}
+17.3 '/zyfwzijin/update': {}
+17.4 '/zyfwzijin/delete': {}
 
 
 
