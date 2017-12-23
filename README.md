@@ -189,7 +189,6 @@
     'data': [{
       'id': 1,
       'province': '北京',
-      'level': '地市级',
       'total': 55,
       'percent': 1%,
       'sysNum': 4
