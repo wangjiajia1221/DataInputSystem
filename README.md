@@ -110,7 +110,6 @@
       'jigouNum': 20,
       'zhuanzhiNum': 10,
       'jicengNum': 10,
-      'orgNum': 10,
       'dangyuanNum': 10,
       'totalNum': 60 //前端不用填写，后端计算得出
     }],
@@ -201,7 +200,7 @@
 12.3 '/zyzzhuce/update': {}
 12.4 '/zyzzhuce/delete': {}
 
-13、表13接口：(志愿者注册)
+13、表13接口：(志愿者培训)
 13.1 '/zyzpeixun/get': {
     'data': [{
       'id': 1,
