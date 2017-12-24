@@ -4,6 +4,7 @@
     </div>
     <el-menu
       class="el-menu-vertical-demo"
+      :unique-opened="true"
       :router="true"
       :default-active="$route.path"
       @open="handleOpen"
@@ -24,7 +25,7 @@
           </el-menu-item>
           <el-menu-item index="/gangwei">
             <i class="el-icon-setting"></i>
-            <span slot="title">岗位</span>
+            <span slot="title">社工岗位</span>
           </el-menu-item>
           <el-menu-item index="/rencaiziyuan">
             <i class="el-icon-setting"></i>
@@ -38,7 +39,7 @@
             <i class="el-icon-setting"></i>
             <span slot="title">行业协会</span>
           </el-menu-item>
-          <el-menu-item index="/mibanjigou">
+          <el-menu-item index="/minbanjigou">
             <i class="el-icon-setting"></i>
             <span slot="title">民办机构</span>
           </el-menu-item>

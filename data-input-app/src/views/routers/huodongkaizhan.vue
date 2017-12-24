@@ -2,18 +2,19 @@
   <div>
     <el-tabs v-model="defaultYear" type="card">
       <el-tab-pane label="2017年" name="2017">
-        <div style="display:inline-block;width:70%;vertical-align:top;">
+        <div style="display:inline-block;width:60%;vertical-align: top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">社会工作岗位开发设置情况统计表</el-tag>
+            <el-tag type="success">志愿服务活动开展情况统计表</el-tag>
           </div>
         </div>
-        <div style="display:inline-block;text-align:left;width:25%">
+        <div style="display:inline-block;text-align:left;width:35%">
           <el-card class="box-card">
-            <div>1.对于社会工作岗位及职责的定义参照《关于加强社会工作专业岗位开发与人才激励保障的意见》（民发〔2017〕186号）；</div>
-            <div>2.分类统计所辖范围内各类单位设置社会工作服务站（科室、中心）情况。</div>
+            <div>1.志愿服务总时数在全省范围内进行历年累计统计，不限于省级重点志愿服务活动；</div>
+            <div>2.志愿服务总时数中能区分2017年服务时间的，请单独注明2017年度志愿服务时数；</div>
+            <div>3.省级重点志愿服务活动包括但不限于：试点示范、工程计划、品牌项目等。</div>
           </el-card>
         </div>
         <el-dialog
@@ -24,67 +25,39 @@
             <el-form-item v-show="false">
               <el-input auto-complete="off" v-model="formData.id"></el-input>
             </el-form-item>
-            <el-form-item label="类别:" >
-              <el-select placeholder="请选择类别" v-model="formData.type">
-                <el-option :label="types[1]" value="1"></el-option>
-                <el-option :label="types[2]" value="2"></el-option>
-                <el-option :label="types[3]" value="3"></el-option>
-                <el-option :label="types[4]" value="4"></el-option>
-                <el-option :label="types[5]" value="5"></el-option>
-              </el-select>
-            </el-form-item>
             <el-form-item
-              label="岗位数量（个）:"
+              label="志愿服务总时数:"
               
-              prop="gangweiNum"
+              prop="totalHours"
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.gangweiNum"></el-input>
+              <el-input auto-complete="off" v-model.number="formData.totalHours"></el-input>小时
             </el-form-item>
             <el-form-item
-              label="社会工作服务站（室、中心）设置情况（个）:"
-              prop="fuwuzhanNum"
+              label="年志愿服务时数:"
               
+              prop="oneYearHours"
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.fuwuzhanNum"></el-input>
+              <el-input auto-complete="off" v-model.number="formData.oneYearHours"></el-input>小时
             </el-form-item>
             <el-form-item
-              label="虽未明确为社会工作岗位，但实际岗位职责包括社会工作的（个）:"
-              prop="otherNum"
-              
+              label="名称及简介:"
               :rules="[
-                { required: true, message: '数量不能为空'},
-                { type: 'number', message: '必须为数字值'}
-              ]">
-              <el-input auto-complete="off" v-model.number="formData.otherNum"></el-input>
-            </el-form-item>
-            <el-form-item
-              label="已取得社会工作学历学位、职业资格或培训证书，但未从事社会工作的（人）:"
-              prop="nojobNum"
-              
-              :rules="[
-                { required: true, message: '数量不能为空'},
-                { type: 'number', message: '必须为数字值'}
-              ]">
-              <el-input auto-complete="off" v-model.number="formData.nojobNum"></el-input>
-            </el-form-item>
-            <el-form-item
-              label="备注:"
-              :rules="[
-                { required: true, message: '备注不能为空'}
+                { required: true, message: '名称及简介不能为空'}
               ]"
-              prop="comment">
+              prop="activities">
               <el-input 
                 auto-complete="off" 
-                :maxlength='1000' 
-                type="textarea" 
-                placeholder="最多不不超过1000字"
-                v-model.number="formData.comment"></el-input>
+                v-model="formData.activities"
+                :maxlength="1000"
+                type="textarea"
+                :rows="4"
+                placeholder="请输入省级重点志愿服务活动名称及简介，多个活动通过分号分割并换行，最多不超过1000字"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -109,37 +82,20 @@
             label="省（区、市）">
           </el-table-column>
           <el-table-column
+            prop="totalHours"
             sortable
-            label="类别">
-            <template slot-scope="scope">
-              {{types[scope.row.type]}}
-            </template>
+            label="志愿服务总时数（小时）">
           </el-table-column>
           <el-table-column
-            prop="gangweiNum"
+            prop="oneYearHours"
             sortable
-            label="岗位数量（个）">
-          </el-table-column>
-          <el-table-column
-            prop="fuwuzhanNum"
-            sortable
-            label="社会工作服务站（室、中心）设置情况（个）">
-          </el-table-column>
-          <el-table-column
-            prop="otherNum"
-            sortable
-            label="虽未明确为社会工作岗位，但实际岗位职责包括社会工作的（个）">
-          </el-table-column>
-          <el-table-column
-            prop="nojobNum"
-            sortable
-            label="已取得社会工作学历学位、职业资格或培训证书，但未从事社会工作的（人）">
+            :label="`其中：${defaultYear}年志愿服务时数（小时）`">
           </el-table-column>
           <el-table-column
             sortable
-            label="备注">
-            <template slot-scope="scope" v-if="scope.row.comment">
-              {{utils.subString(scope.row.comment, 50, true)}}
+            label="省级重点志愿服务活动名称及简介">
+            <template slot-scope="scope" v-if="scope.row.activities">
+              {{utils.subString(scope.row.activities, 50, true)}}
             </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -172,15 +128,11 @@ export default {
       formData: {
         id: null,
         province: null,
-        type: null,
-        gangweiNum: null, 
-        fuwuzhanNum: null,
-        otherNum: null,
-        nojobNum: null,
-        comment: null
+        totalHours: null,
+        oneYearHours: null, 
+        activities: null
       },
       utils: utils,
-      types: ['0', '乡镇、街道和社区', '行政机关', '民政事业单位', '民政部门作为业务主管单位的社会组织', '其他（请在备注注明）'],
       dialogVisible: false,
       action: 'add',
       defaultYear: '2017',
@@ -198,7 +150,7 @@ export default {
         baseURL: '/api/v1',
         // 请求参数以jquery.param方式进行序列化
         paramSerializerJQLikeEnabled: true,
-        url: '/gangwei/get',
+        url: '/huodongkaizhan/get',
         // to methods of that instance.
         method: 'get',
         // params仅用于get请求， 会拼接在url后面
@@ -216,12 +168,9 @@ export default {
       this.formData = {
         id: null,
         province: null,
-        gangweiNum: null,
-        type: null,
-        fuwuzhanNum: null,
-        otherNum: null,
-        nojobNum: null,
-        comment: null
+        totalHours: null,
+        oneYearHours: null, 
+        activities: null
       }
     },
     handleEdit (index, rowData) {
@@ -243,7 +192,7 @@ export default {
         let config = {
           baseURL: '/api/v1',
           paramSerializerJQLikeEnabled: true,
-          url: '/gangwei/delete',
+          url: '/huodongkaizhan/delete',
           method: 'post',
           data: {id: rowData.id}
         };
@@ -283,7 +232,7 @@ export default {
         baseURL: '/api/v1',
         // 请求参数以jquery.param方式进行序列化
         paramSerializerJQLikeEnabled: true,
-        url: '/gangwei/add',
+        url: '/huodongkaizhan/add',
         // to methods of that instance.
         method: 'post',
         // data仅用于post请求， 放在http请求体中
@@ -320,7 +269,7 @@ export default {
       let config = {
         baseURL: '/api/v1',
         paramSerializerJQLikeEnabled: true,
-        url: '/gangwei/update',
+        url: '/huodongkaizhan/update',
         method: 'post',
         data: data
       };

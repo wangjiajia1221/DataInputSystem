@@ -2,44 +2,46 @@
   <div>
     <el-tabs v-model="defaultYear" type="card">
       <el-tab-pane label="2017年" name="2017">
-        <div class="top-container">
+        <div class="top-add">
           <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
+        </div>
+        <div class="top-container">
+          <el-tag type="success">社会工作行业协会情况统计表</el-tag>
         </div>
         <el-dialog
           title="添加数据"
           :visible.sync="dialogVisible"
-          width="40%"
         >
           <el-form :model="formData" ref="formData">
             <el-form-item v-show="false">
               <el-input auto-complete="off" v-model="formData.id"></el-input>
             </el-form-item>
-            <el-form-item label="级别:" label-width="100px">
+            <el-form-item label="级别:" >
               <el-select placeholder="请选择级别" v-model="formData.level">
-                <el-option label="在省级民政部门登记的" value="在省级民政部门登记的"></el-option>
-                <el-option label="在地市级民政部门登记的" value="在地市级民政部门登记的"></el-option>
-                <el-option label="在县区级民政部门登记的" value="在县区级民政部门登记的"></el-option>
+                <el-option :label="levels[1]" value="1"></el-option>
+                <el-option :label="levels[2]" value="2"></el-option>
+                <el-option :label="levels[3]" value="3"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item
               label="行业协会数量:"
-              label-width="100px"
+              
               prop="xiehuiNum"
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.cities"></el-input>
+              <el-input auto-complete="off" v-model.number="formData.xiehuiNum"></el-input>
             </el-form-item>
             <el-form-item
               label="成立党组织数量:"
               prop="orgNum"
-              label-width="100px"
+              
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.counties"></el-input>
+              <el-input auto-complete="off" v-model.number="formData.orgNum"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -64,9 +66,11 @@
             label="省（区、市）">
           </el-table-column>
           <el-table-column
-            prop="level"
             sortable
             label="级别">
+            <template slot-scope="scope">
+              {{levels[scope.row.level]}}
+            </template>
           </el-table-column>
           <el-table-column
             prop="xiehuiNum"
@@ -98,6 +102,7 @@
 <script>
 import DataProvider from '@bbfe/data-provider';
 import provinces from '../../config/provinces'
+import utils from '../../utils'
 
 let service = new DataProvider();
 export default {
@@ -114,6 +119,8 @@ export default {
       dialogVisible: false,
       action: 'add',
       defaultYear: '2017',
+      levels: ['0', '在省级民政部门登记的', '在地市级民政部门登记的', '在县区级民政部门登记的'],
+      utils: utils,
       provinces: provinces.provinces
     }
   },
@@ -146,8 +153,9 @@ export default {
       this.formData = {
         id: null,
         province: null,
-        cities: null,
-        counties: null
+        level: null,
+        xiehuiNum: null,
+        orgNum: null
       }
     },
     handleEdit (index, rowData) {
@@ -171,7 +179,7 @@ export default {
           paramSerializerJQLikeEnabled: true,
           url: '/hangyexiehui/delete',
           method: 'post',
-          data: rowData.id
+          data: {id: rowData.id}
         };
         service.request(config)
         .then(data => {
@@ -279,13 +287,6 @@ export default {
 
 </script>
 <style lang="less">
-  .el-form-item{
-    margin-left: 30px;
-    .el-form-item__content {
-      width: 60%;
-      text-align: left;
-    }
-  }
   .dialog-footer {
     text-align:center;
   }

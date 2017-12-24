@@ -2,18 +2,19 @@
   <div>
     <el-tabs v-model="defaultYear" type="card">
       <el-tab-pane label="2017年" name="2017">
-        <div style="display:inline-block;width:70%;vertical-align:top;">
+        <div style="display:inline-block;width:60%;vertical-align:top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">社会工作岗位开发设置情况统计表</el-tag>
+            <el-tag type="success">社会工作专业人才资源情况统计表</el-tag>
           </div>
         </div>
-        <div style="display:inline-block;text-align:left;width:25%">
+        <div style="display:inline-block;text-align:left;width:35%">
           <el-card class="box-card">
-            <div>1.对于社会工作岗位及职责的定义参照《关于加强社会工作专业岗位开发与人才激励保障的意见》（民发〔2017〕186号）；</div>
-            <div>2.分类统计所辖范围内各类单位设置社会工作服务站（科室、中心）情况。</div>
+            <div>1.社会工作专业人才定义参照《中央组织部办公厅、民政部办公厅关于开展全国社会工作专业人才资源统计的通知》（民办函〔2016〕151号）；</div>
+            <div>2.请民政部门积极协调相关部门提供数据，对于无法提供数据的部门不作强行要求；</div>
+            <div>3.统计截止日期根据各部门实际掌握的数据情况确定，越新越好，请具体注明。</div>
           </el-card>
         </div>
         <el-dialog
@@ -24,67 +25,122 @@
             <el-form-item v-show="false">
               <el-input auto-complete="off" v-model="formData.id"></el-input>
             </el-form-item>
-            <el-form-item label="类别:" >
-              <el-select placeholder="请选择类别" v-model="formData.type">
-                <el-option :label="types[1]" value="1"></el-option>
-                <el-option :label="types[2]" value="2"></el-option>
-                <el-option :label="types[3]" value="3"></el-option>
-                <el-option :label="types[4]" value="4"></el-option>
-                <el-option :label="types[5]" value="5"></el-option>
-              </el-select>
-            </el-form-item>
             <el-form-item
-              label="岗位数量（个）:"
-              
-              prop="gangweiNum"
+              label="民政:"
+              prop="minzheng"
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.gangweiNum"></el-input>
+              <el-input auto-complete="off" v-model.number="formData.minzheng"></el-input>
             </el-form-item>
             <el-form-item
-              label="社会工作服务站（室、中心）设置情况（个）:"
-              prop="fuwuzhanNum"
-              
+              label="公安:"
+              prop="gongan"
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.fuwuzhanNum"></el-input>
+              <el-input auto-complete="off" v-model.number="formData.gongan"></el-input>
             </el-form-item>
             <el-form-item
-              label="虽未明确为社会工作岗位，但实际岗位职责包括社会工作的（个）:"
-              prop="otherNum"
-              
+              label="司法行政:"
+              prop="sifaxingzheng"
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.otherNum"></el-input>
+              <el-input auto-complete="off" v-model.number="formData.sifaxingzheng"></el-input>
             </el-form-item>
             <el-form-item
-              label="已取得社会工作学历学位、职业资格或培训证书，但未从事社会工作的（人）:"
-              prop="nojobNum"
-              
+              label="扶贫:"
+              prop="fupin"
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.nojobNum"></el-input>
+              <el-input auto-complete="off" v-model.number="formData.fupin"></el-input>
             </el-form-item>
             <el-form-item
-              label="备注:"
+              label="工会:"
+              prop="gonghui"
               :rules="[
-                { required: true, message: '备注不能为空'}
-              ]"
-              prop="comment">
-              <el-input 
-                auto-complete="off" 
-                :maxlength='1000' 
-                type="textarea" 
-                placeholder="最多不不超过1000字"
-                v-model.number="formData.comment"></el-input>
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.gonghui"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="共青团:"
+              prop="gongqingtuan"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.gongqingtuan"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="综治:"
+              prop="zongzhi"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.zongzhi"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="教育:"
+              prop="jiaoyu"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.jiaoyu"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="人力社保:"
+              prop="renlishebao"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.renlishebao"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="卫生计生:"
+              prop="weishengjisheng"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.weishengjisheng"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="信访:"
+              prop="xinfang"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.xinfang"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="妇联:"
+              prop="fulian"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.fulian"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="残联:"
+              prop="canlian"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.canlian"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -96,7 +152,6 @@
         <el-table
         :data="tableData"
         border
-        show-summary
         style="width: 95%;margin-left:20px">
           <el-table-column
             width="50"
@@ -109,37 +164,75 @@
             label="省（区、市）">
           </el-table-column>
           <el-table-column
+            prop="minzheng"
             sortable
-            label="类别">
+            label="民政">
+          </el-table-column>
+          <el-table-column
+            prop="gongan"
+            sortable
+            label="公安">
+          </el-table-column>
+          <el-table-column
+            prop="sifaxingzheng"
+            sortable
+            label="司法行政">
+          </el-table-column>
+          <el-table-column
+            prop="fupin"
+            sortable
+            label="扶贫">
+          </el-table-column>
+          <el-table-column
+            prop="gonghui"
+            sortable
+            label="工会">
+          </el-table-column>
+          <el-table-column
+            prop="gongqingtuan"
+            sortable
+            label="共青团">
+          </el-table-column>
+          <el-table-column
+            prop="zongzhi"
+            sortable
+            label="综治">
+          </el-table-column>
+          <el-table-column
+            prop="jiaoyu"
+            sortable
+            label="教育">
+          </el-table-column>
+          <el-table-column
+            prop="renlishebao"
+            sortable
+            label="人力社保">
+          </el-table-column>
+          <el-table-column
+            prop="weishengjisheng"
+            sortable
+            label="卫生计生">
+          </el-table-column>
+          <el-table-column
+            prop="xinfang"
+            sortable
+            label="信访">
+          </el-table-column>
+          <el-table-column
+            prop="fulian"
+            sortable
+            label="妇联">
+          </el-table-column>
+          <el-table-column
+            prop="canlian"
+            sortable
+            label="残联">
+          </el-table-column>
+          <el-table-column
+            sortable
+            label="社会工作专业人才总量">
             <template slot-scope="scope">
-              {{types[scope.row.type]}}
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="gangweiNum"
-            sortable
-            label="岗位数量（个）">
-          </el-table-column>
-          <el-table-column
-            prop="fuwuzhanNum"
-            sortable
-            label="社会工作服务站（室、中心）设置情况（个）">
-          </el-table-column>
-          <el-table-column
-            prop="otherNum"
-            sortable
-            label="虽未明确为社会工作岗位，但实际岗位职责包括社会工作的（个）">
-          </el-table-column>
-          <el-table-column
-            prop="nojobNum"
-            sortable
-            label="已取得社会工作学历学位、职业资格或培训证书，但未从事社会工作的（人）">
-          </el-table-column>
-          <el-table-column
-            sortable
-            label="备注">
-            <template slot-scope="scope" v-if="scope.row.comment">
-              {{utils.subString(scope.row.comment, 50, true)}}
+              {{sum(scope.row)}}
             </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -172,15 +265,21 @@ export default {
       formData: {
         id: null,
         province: null,
-        type: null,
-        gangweiNum: null, 
-        fuwuzhanNum: null,
-        otherNum: null,
-        nojobNum: null,
-        comment: null
+        minzheng: null,
+        gongan: null,
+        sifaxingzheng: null,
+        fupin: null,
+        gonghui: null,
+        gongqingtuan: null,
+        zongzhi: null,
+        jiaoyu: null,
+        renlishebao: null,
+        weishengjisheng: null,
+        xinfang: null,
+        fulian: null,
+        canlian: null
       },
       utils: utils,
-      types: ['0', '乡镇、街道和社区', '行政机关', '民政事业单位', '民政部门作为业务主管单位的社会组织', '其他（请在备注注明）'],
       dialogVisible: false,
       action: 'add',
       defaultYear: '2017',
@@ -191,6 +290,15 @@ export default {
     this.getData();
   },
   methods: {
+    sum(rowData) {
+      let sum = 0;
+      Object.keys(rowData).forEach(item => {
+        // debugger
+        if(item!='id'&&item!='province')
+        sum += parseInt(rowData[item]);
+      })
+      return sum;
+    },
     getData () {
       let params = {};
       let config = {
@@ -198,7 +306,7 @@ export default {
         baseURL: '/api/v1',
         // 请求参数以jquery.param方式进行序列化
         paramSerializerJQLikeEnabled: true,
-        url: '/gangwei/get',
+        url: '/rencaiziyuan/get',
         // to methods of that instance.
         method: 'get',
         // params仅用于get请求， 会拼接在url后面
@@ -216,12 +324,19 @@ export default {
       this.formData = {
         id: null,
         province: null,
-        gangweiNum: null,
-        type: null,
-        fuwuzhanNum: null,
-        otherNum: null,
-        nojobNum: null,
-        comment: null
+        minzheng: null,
+        gongan: null,
+        sifaxingzheng: null,
+        fupin: null,
+        gonghui: null,
+        gongqingtuan: null,
+        zongzhi: null,
+        jiaoyu: null,
+        renlishebao: null,
+        weishengjisheng: null,
+        xinfang: null,
+        fulian: null,
+        canlian: null
       }
     },
     handleEdit (index, rowData) {
@@ -243,7 +358,7 @@ export default {
         let config = {
           baseURL: '/api/v1',
           paramSerializerJQLikeEnabled: true,
-          url: '/gangwei/delete',
+          url: '/rencaiziyuan/delete',
           method: 'post',
           data: {id: rowData.id}
         };
@@ -283,7 +398,7 @@ export default {
         baseURL: '/api/v1',
         // 请求参数以jquery.param方式进行序列化
         paramSerializerJQLikeEnabled: true,
-        url: '/gangwei/add',
+        url: '/rencaiziyuan/add',
         // to methods of that instance.
         method: 'post',
         // data仅用于post请求， 放在http请求体中
@@ -320,7 +435,7 @@ export default {
       let config = {
         baseURL: '/api/v1',
         paramSerializerJQLikeEnabled: true,
-        url: '/gangwei/update',
+        url: '/rencaiziyuan/update',
         method: 'post',
         data: data
       };

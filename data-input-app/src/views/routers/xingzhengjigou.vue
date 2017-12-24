@@ -2,22 +2,29 @@
   <div>
     <el-tabs v-model="defaultYear" type="card">
       <el-tab-pane label="2017年" name="2017">
-        <div class="top-add">
-          <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
+        <div style="display:inline-block;width:70%;vertical-align:top;">
+          <div class="top-add">
+            <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
+          </div>
+          <div class="top-container">
+            <el-tag type="success">社会工作（志愿服务）行政管理机构成立情况统计表</el-tag>
+          </div>
         </div>
-        <div class="top-container">
-          <el-tag type="success">社会工作（志愿服务）行政管理机构成立情况统计表</el-tag>
+        <div style="display:inline-block;text-align:left;width:25%">
+          <el-card class="box-card">
+            <div>1.请分类提供省级、地市级、县区级社会工作行政管理机构的具体名称；</div>
+            <div>2.不符合以上四类情况的不统计。</div>
+          </el-card>
         </div>
         <el-dialog
           title="添加数据"
           :visible.sync="dialogVisible"
-          width="40%"
         >
           <el-form :model="formData">
             <el-form-item v-show="false">
               <el-input auto-complete="off" v-model="formData.id"></el-input>
             </el-form-item>
-            <!-- <el-form-item label="省/直辖市:" label-width="100px">
+            <!-- <el-form-item label="省/直辖市:" >
               <el-select placeholder="请选择省/直辖市" v-model="formData.province">
                 <el-option
                   v-for="province in provinces"
@@ -27,22 +34,25 @@
                 </el-option>
               </el-select>
             </el-form-item> -->
-            <el-form-item label="类别:" label-width="100px">
-              <el-select placeholder="请选择类别" v-model="formData.type">
-                <el-option label="编制管理部门批准设立的社会工作处（科、股）" value="1"></el-option>
-                <el-option label="内部设立相对独立的社会工作处（科、股）" value="2"></el-option>
-                <el-option label="在相关处（科、股）加挂社会工作处（科、股）牌子" value="3"></el-option>
-                <el-option label="成立社会工作事业单位" value="4"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="级别:" label-width="100px">
+            <el-form-item label="级别:" >
               <el-select placeholder="请选择级别" v-model="formData.level">
-                <el-option label="地市级" value="地市级"></el-option>
-                <el-option label="县级" value="县级"></el-option>
+                <el-option :label="levels[1]" value="1"></el-option>
+                <el-option :label="levels[2]" value="2"></el-option>
+                <el-option :label="levels[3]" value="3"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="相关加挂的市(区县):" label-width="100px">
-              <el-input auto-complete="off" v-model="formData.orgNames"></el-input>
+            <el-form-item label="类别:" >
+              <el-select placeholder="请选择类别" v-model="formData.type">
+                <el-option :label="types[1]" value="1"></el-option>
+                <el-option :label="types[2]" value="2"></el-option>
+                <el-option :label="types[3]" value="3"></el-option>
+                <el-option :label="types[4]" value="4"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="地区和机构名称:" prop="orgNames" :rules="[
+                { required: true, message: '不能为空'}
+              ]">
+              <el-input auto-complete="off" type="textarea" v-model="formData.orgNames" :maxlength='1000' placeholder="例：XX省/市/县/区民政厅社会工作处，最多不不超过1000字"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -53,9 +63,10 @@
         </el-dialog>
         <el-table
         :data="tableData"
+        
+        max-height="100px"
         border
-        show-summary
-        style="width: 95%;margin-left:20px">
+        style="width: 95%; margin-left:20px">
           <el-table-column
             width="50"
             label="序号">
@@ -68,28 +79,24 @@
           </el-table-column>
           <el-table-column
             sortable
-            label="类别">
+            label="级别">
             <template slot-scope="scope">
-              <span v-if="scope.row.type=='1'">编制管理部门批准设立的社会工作处（科、股）</span>
-              <span v-else-if="scope.row.type=='2'">内部设立相对独立的社会工作处（科、股）</span>
-              <span v-else-if="scope.row.type=='3'">在相关处（科、股）加挂社会工作处（科、股）牌子</span>
-              <span v-else-if="scope.row.type=='4'">成立社会工作事业单位</span>
+              {{levels[scope.row.level]}}
             </template>
           </el-table-column>
           <el-table-column
-            prop="level"
             sortable
-            label="级别">
+            label="类别">
+            <template slot-scope="scope">
+              {{types[scope.row.type]}}
+            </template>
           </el-table-column>
           <el-table-column
-            prop="independent"
             sortable
-            label="设立相对独立的社会工作处室（科、股）的市（区、县）">
-          </el-table-column>
-          <el-table-column
-            prop="relate"
-            sortable
-            label="在相关处室加挂社会工作处室（科、股）牌子的市（区、县）">
+            label="地区和机构名称">
+            <template slot-scope="scope" v-if="scope.row.orgNames">
+              {{utils.subString(scope.row.orgNames, 50, true)}}
+            </template>
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
@@ -111,6 +118,7 @@
 <script>
 import DataProvider from '@bbfe/data-provider';
 import provinces from '../../config/provinces'
+import utils from '../../utils'
 
 let service = new DataProvider();
 export default {
@@ -122,7 +130,14 @@ export default {
         province: null,
         level: null,
         type: null,
+        orgNames: null
       },
+      utils: utils,
+      types: ['0', '编制管理部门批准设立的社会工作处（科、股）',
+        '内部设立相对独立的社会工作处（科、股）',
+        '在相关处（科、股）加挂社会工作处（科、股）牌子',
+        '成立社会工作事业单位'],
+      levels: ['0', '省级', '地市级', '县级'],
       dialogVisible: false,
       action: 'add',
       defaultYear: '2017',
@@ -159,8 +174,8 @@ export default {
         id: null,
         province: null,
         level: null,
-        independent: null,
-        relate: null
+        type: null,
+        orgNames: null
       }
     },
     handleEdit (index, rowData) {
@@ -184,7 +199,7 @@ export default {
           paramSerializerJQLikeEnabled: true,
           url: '/xingzhengjigou/delete',
           method: 'post',
-          data: rowData.id
+          data: {id: rowData.id}
         };
         service.request(config)
         .then(data => {
@@ -289,13 +304,6 @@ export default {
 
 </script>
 <style lang="less">
-  .el-form-item{
-    margin-left: 30px;
-    .el-form-item__content {
-      width: 60%;
-      text-align: left;
-    }
-  }
   .dialog-footer {
     text-align:center;
   }

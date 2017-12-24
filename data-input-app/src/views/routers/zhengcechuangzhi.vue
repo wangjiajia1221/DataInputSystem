@@ -2,22 +2,30 @@
   <div>
     <el-tabs v-model="defaultYear" type="card">
       <el-tab-pane label="2017年" name="2017">
-        <div class="top-add">
-          <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
+        <div style="display:inline-block;width:70%;vertical-align: top;">
+          <div class="top-add">
+            <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
+          </div>
+          <div class="top-container">
+            <el-tag type="success">出台社会工作政策情况统计表</el-tag>
+          </div>
         </div>
-        <div class="top-container">
-          <el-tag type="success">出台社会工作政策情况统计表</el-tag>
+        <div style="display:inline-block;text-align:left;width:25%">
+          <el-card class="box-card">
+            <div>1.只填报2017年出台的政策；</div>
+            <div>2.只统计省委、省政府及省级民政部门单独或联合相关部门出台的社会工作政策文件（含规划、标准）；</div>
+            <div>3.请同时提供政策文本。</div>
+          </el-card>
         </div>
         <el-dialog
           title="添加数据"
           :visible.sync="dialogVisible"
-          width="40%"
         >
           <el-form :model="formData">
             <el-form-item v-show="false">
               <el-input auto-complete="off" v-model="formData.id"></el-input>
             </el-form-item>
-            <!-- <el-form-item label="省/直辖市:" label-width="100px">
+            <!-- <el-form-item label="省/直辖市:" >
               <el-select placeholder="请选择省/直辖市" v-model="formData.province">
                 <el-option
                   v-for="province in provinces"
@@ -27,16 +35,36 @@
                 </el-option>
               </el-select>
             </el-form-item> -->
-            <el-form-item label="文件名:" label-width="100px">
-              <el-input auto-complete="off" v-model="formData.docName"></el-input>
+            <el-form-item label="文件名:" prop="docName" :rules="[
+              { required: true, message: '不能为空'}
+            ]">
+              <el-input auto-complete="off" placeholder="例：《关于加快XXXX的意见》" v-model="formData.docName"></el-input>
             </el-form-item>
-            <el-form-item label="文号:" label-width="100px">
-              <el-input auto-complete="off" v-model="formData.docRef"></el-input>
+            <el-form-item label="上传文件:">
+              <el-upload
+                action="/file_upload"
+                :data="{'menu': 'table1'}"
+                :on-remove="handleRemove"
+                accept=".doc, .docx, .pdf"
+                :on-success="uploadSuccess"
+                :limit="1"
+                :on-exceed="handleExceed"
+                :file-list="formData.fileList">
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传doc/docx/pdf文件</div>
+              </el-upload>
             </el-form-item>
-            <el-form-item label="发文单位:" label-width="100px">
-              <el-input auto-complete="off" v-model="formData.creator"></el-input>
+            <el-form-item label="文号:" prop="docRef" :rules="[
+                { required: true, message: '不能为空'}
+              ]">
+              <el-input auto-complete="off" placeholder="例：（XX发〔2016〕XXX号）" v-model="formData.docRef"></el-input>
             </el-form-item>
-            <el-form-item label="发文时间:" label-width="100px">
+            <el-form-item label="发文单位:" prop="creator" :rules="[
+                { required: true, message: '不能为空'}
+              ]">
+              <el-input auto-complete="off"  placeholder="例：XX厅、XX厅、XX局"v-model="formData.creator"></el-input>
+            </el-form-item>
+            <el-form-item label="发文时间:" >
               <el-date-picker
                 v-model="formData.createTime"
                 type="date"
@@ -54,7 +82,6 @@
         <el-table
         :data="tableData"
         border
-        show-summary
         style="width: 95%;margin-left:20px">
           <el-table-column
             width="50"
@@ -86,6 +113,13 @@
             sortable
             label="发文时间">
           </el-table-column>
+<!--           <el-table-column
+            sortable
+            label="文件">
+            <template slot-scope="scope" v-if="scope.row.fileList">
+              <a :href="scope.row.fileList[0].url">{{scope.row.fileList[0].name}}</a>
+            </template>
+          </el-table-column> -->
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
@@ -98,6 +132,16 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-card class="box-card" style="width: 80%; text-align: left; margin:20px 0 0 20px; font-size: 16px">
+          <div slot="header" class="clearfix">
+            当前用户已上传的文件列表：
+          </div>
+            <ol>
+              <li v-for="file in fileLists">
+                {{file}}
+              </li>
+            </ol>
+        </el-card>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -106,6 +150,7 @@
 <script>
 import DataProvider from '@bbfe/data-provider';
 import provinces from '../../config/provinces'
+import utils from '../../utils'
 
 let service = new DataProvider();
 export default {
@@ -118,8 +163,11 @@ export default {
         docName: null,
         docRef: null,
         creator: null,
-        creatTime: null
+        createTime: null,
+        fileList: []
       },
+      fileLists: [], 
+      utils: utils,
       provinces: provinces.provinces,
       dialogVisible: false,
       action: 'add',
@@ -132,6 +180,16 @@ export default {
     // console.log('this', this)
   },
   methods: {
+    handleExceed(file, fileList) {
+      this.$message.warning('一次只能上传一个文件!');
+      console.log(file, fileList);
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    uploadSuccess(file, fileList) {
+      console.log(file, fileList)
+    },
     getData () {
       let params = {};
       let config = {
@@ -149,6 +207,10 @@ export default {
       .then(data => {
         console.log(data);
         this.tableData = data.data;
+        if(data.fileList) {
+          // debugger
+          this.fileLists = data.fileList;
+        }
       }, err => {
         this.$alert(err.message);
       });
@@ -157,8 +219,11 @@ export default {
       this.formData = {
         id: null,
         province: null,
-        docName:null,
-        docRef:null
+        docName: null,
+        docRef: null,
+        creator: null,
+        createTime: null,
+        fileList: []
       }
     },
     handleEdit (index, rowData) {
@@ -180,9 +245,9 @@ export default {
         let config = {
           baseURL: '/api/v1',
           paramSerializerJQLikeEnabled: true,
-          url: '/zhengcechuangzhi/dele',
+          url: '/zhengcechuangzhi/delete',
           method: 'post',
-          data: rowData.id
+          data: {id: rowData.id}
         };
         service.request(config)
         .then(data => {
@@ -286,13 +351,6 @@ export default {
 
 </script>
 <style lang="less" scoped>
-  .el-form-item{
-    margin-left: 30px;
-    .el-form-item__content {
-      width: 60%;
-      text-align: left;
-    }
-  }
   .dialog-footer {
     text-align:center;
   }

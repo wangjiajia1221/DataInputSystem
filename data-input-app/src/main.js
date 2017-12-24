@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import routerConf from './config/routerConf'
-require('../test');
+// require('../test');
 
 Vue.use(VueRouter);
 Vue.use(Element);
@@ -17,6 +17,10 @@ const router = new VueRouter({
   routes: routerConf
 })
 
+router.beforeEach((to, from, next) => {
+  document.title = '社会工作和志愿服务政策规划落实情况填报系统';
+  next() // 确保一定要调用 next()
+})
 
 new Vue({
   el: '#app',

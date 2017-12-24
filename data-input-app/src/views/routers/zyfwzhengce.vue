@@ -2,89 +2,75 @@
   <div>
     <el-tabs v-model="defaultYear" type="card">
       <el-tab-pane label="2017年" name="2017">
-        <div style="display:inline-block;width:70%;vertical-align:top;">
+        <div style="display:inline-block;width:60%;vertical-align:top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">社会工作岗位开发设置情况统计表</el-tag>
+            <el-tag type="success">出台志愿服务政策情况统计表</el-tag>
           </div>
         </div>
-        <div style="display:inline-block;text-align:left;width:25%">
+        <div style="display:inline-block;text-align:left;width:35%">
           <el-card class="box-card">
-            <div>1.对于社会工作岗位及职责的定义参照《关于加强社会工作专业岗位开发与人才激励保障的意见》（民发〔2017〕186号）；</div>
-            <div>2.分类统计所辖范围内各类单位设置社会工作服务站（科室、中心）情况。</div>
+            <div>1.只填报2017年出台的政策；</div>
+            <div>2.只填报省委、省政府及省级民政部门单独或联合相关部门出台的志愿服务政策文件（含规划、标准）；</div>
+            <div>3.请同时提供政策文本。</div>
           </el-card>
         </div>
         <el-dialog
           title="添加数据"
           :visible.sync="dialogVisible"
         >
-          <el-form :model="formData" ref="formData">
+          <el-form :model="formData">
             <el-form-item v-show="false">
               <el-input auto-complete="off" v-model="formData.id"></el-input>
             </el-form-item>
-            <el-form-item label="类别:" >
-              <el-select placeholder="请选择类别" v-model="formData.type">
-                <el-option :label="types[1]" value="1"></el-option>
-                <el-option :label="types[2]" value="2"></el-option>
-                <el-option :label="types[3]" value="3"></el-option>
-                <el-option :label="types[4]" value="4"></el-option>
-                <el-option :label="types[5]" value="5"></el-option>
+            <!-- <el-form-item label="省/直辖市:" >
+              <el-select placeholder="请选择省/直辖市" v-model="formData.province">
+                <el-option
+                  v-for="province in provinces"
+                  :key="province.name"
+                  :label="province.name_cn"
+                  :value="province.name_cn">
+                </el-option>
               </el-select>
-            </el-form-item>
-            <el-form-item
-              label="岗位数量（个）:"
-              
-              prop="gangweiNum"
-              :rules="[
-                { required: true, message: '数量不能为空'},
-                { type: 'number', message: '必须为数字值'}
+            </el-form-item> -->
+            <el-form-item label="文件名:" prop="docName" :rules="[
+                { required: true, message: '不能为空'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.gangweiNum"></el-input>
+              <el-input auto-complete="off" placeholder="例：《关于加快XXXX的意见》" v-model="formData.docName"></el-input>
             </el-form-item>
-            <el-form-item
-              label="社会工作服务站（室、中心）设置情况（个）:"
-              prop="fuwuzhanNum"
-              
-              :rules="[
-                { required: true, message: '数量不能为空'},
-                { type: 'number', message: '必须为数字值'}
+            <el-form-item label="上传文件:">
+              <el-upload
+                action="/file_upload"
+                :data="{'menu': 'table10'}"
+                :on-remove="handleRemove"
+                accept=".doc, .docx, .pdf"
+                :on-success="uploadSuccess"
+                :limit="1"
+                :on-exceed="handleExceed"
+                :file-list="formData.fileList">
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传doc/docx/pdf文件</div>
+              </el-upload>
+            </el-form-item>
+            <el-form-item label="文号:" prop="docRef" :rules="[
+                { required: true, message: '不能为空'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.fuwuzhanNum"></el-input>
+              <el-input auto-complete="off" placeholder="例：（XX发〔2016〕XXX号）" v-model="formData.docRef"></el-input>
             </el-form-item>
-            <el-form-item
-              label="虽未明确为社会工作岗位，但实际岗位职责包括社会工作的（个）:"
-              prop="otherNum"
-              
-              :rules="[
-                { required: true, message: '数量不能为空'},
-                { type: 'number', message: '必须为数字值'}
+            <el-form-item label="发文单位:" prop="creator" :rules="[
+                { required: true, message: '不能为空'}
               ]">
-              <el-input auto-complete="off" v-model.number="formData.otherNum"></el-input>
+              <el-input auto-complete="off"  placeholder="例：XX厅、XX厅、XX局"v-model="formData.creator"></el-input>
             </el-form-item>
-            <el-form-item
-              label="已取得社会工作学历学位、职业资格或培训证书，但未从事社会工作的（人）:"
-              prop="nojobNum"
-              
-              :rules="[
-                { required: true, message: '数量不能为空'},
-                { type: 'number', message: '必须为数字值'}
-              ]">
-              <el-input auto-complete="off" v-model.number="formData.nojobNum"></el-input>
-            </el-form-item>
-            <el-form-item
-              label="备注:"
-              :rules="[
-                { required: true, message: '备注不能为空'}
-              ]"
-              prop="comment">
-              <el-input 
-                auto-complete="off" 
-                :maxlength='1000' 
-                type="textarea" 
-                placeholder="最多不不超过1000字"
-                v-model.number="formData.comment"></el-input>
+            <el-form-item label="发文时间:" >
+              <el-date-picker
+                v-model="formData.createTime"
+                type="date"
+                placeholder="选择日期"
+                value-format="yyyy-MM-dd">
+              </el-date-picker>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -96,7 +82,6 @@
         <el-table
         :data="tableData"
         border
-        show-summary
         style="width: 95%;margin-left:20px">
           <el-table-column
             width="50"
@@ -106,42 +91,35 @@
           <el-table-column
             prop="province"
             sortable
-            label="省（区、市）">
+            label="省/直辖市">
           </el-table-column>
           <el-table-column
+            prop="docName"
             sortable
-            label="类别">
-            <template slot-scope="scope">
-              {{types[scope.row.type]}}
+            label="文件名称">
+          </el-table-column>
+          <el-table-column
+            prop="docRef"
+            sortable
+            label="发文文号">
+          </el-table-column>
+          <el-table-column
+            prop="creator"
+            sortable
+            label="发文单位">
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            sortable
+            label="发文时间">
+          </el-table-column>
+<!--           <el-table-column
+            sortable
+            label="文件">
+            <template slot-scope="scope" v-if="scope.row.fileList">
+              <a :href="scope.row.fileList[0].url">{{scope.row.fileList[0].name}}</a>
             </template>
-          </el-table-column>
-          <el-table-column
-            prop="gangweiNum"
-            sortable
-            label="岗位数量（个）">
-          </el-table-column>
-          <el-table-column
-            prop="fuwuzhanNum"
-            sortable
-            label="社会工作服务站（室、中心）设置情况（个）">
-          </el-table-column>
-          <el-table-column
-            prop="otherNum"
-            sortable
-            label="虽未明确为社会工作岗位，但实际岗位职责包括社会工作的（个）">
-          </el-table-column>
-          <el-table-column
-            prop="nojobNum"
-            sortable
-            label="已取得社会工作学历学位、职业资格或培训证书，但未从事社会工作的（人）">
-          </el-table-column>
-          <el-table-column
-            sortable
-            label="备注">
-            <template slot-scope="scope" v-if="scope.row.comment">
-              {{utils.subString(scope.row.comment, 50, true)}}
-            </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
@@ -154,6 +132,16 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-card class="box-card" style="width: 80%; text-align: left; margin:20px 0 0 20px; font-size: 16px">
+          <div slot="header" class="clearfix">
+            当前用户已上传的文件列表：
+          </div>
+          <ol>
+            <li v-for="file in fileLists">
+              {{file}}
+            </li>
+          </ol>
+        </el-card>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -172,25 +160,36 @@ export default {
       formData: {
         id: null,
         province: null,
-        type: null,
-        gangweiNum: null, 
-        fuwuzhanNum: null,
-        otherNum: null,
-        nojobNum: null,
-        comment: null
+        docName: null,
+        docRef: null,
+        creator: null,
+        createTime: null,
+        fileList: []
       },
+      fileLists: [],
       utils: utils,
-      types: ['0', '乡镇、街道和社区', '行政机关', '民政事业单位', '民政部门作为业务主管单位的社会组织', '其他（请在备注注明）'],
+      provinces: provinces.provinces,
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
-      provinces: provinces.provinces
+      defaultYear: '2017'
     }
   },
   mounted () {
     this.getData();
+    // console.log('provinces',provinces.provinces);
+    // console.log('this', this)
   },
   methods: {
+    handleExceed(file, fileList) {
+      this.$message.warning('一次只能上传一个文件!');
+      console.log(file, fileList);
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    uploadSuccess(file, fileList) {
+      console.log(file, fileList)
+    },
     getData () {
       let params = {};
       let config = {
@@ -198,7 +197,7 @@ export default {
         baseURL: '/api/v1',
         // 请求参数以jquery.param方式进行序列化
         paramSerializerJQLikeEnabled: true,
-        url: '/gangwei/get',
+        url: '/zyfwzhengce/get',
         // to methods of that instance.
         method: 'get',
         // params仅用于get请求， 会拼接在url后面
@@ -208,6 +207,10 @@ export default {
       .then(data => {
         console.log(data);
         this.tableData = data.data;
+        if(data.fileList) {
+          // debugger
+          this.fileLists = data.fileList;
+        }
       }, err => {
         this.$alert(err.message);
       });
@@ -216,16 +219,15 @@ export default {
       this.formData = {
         id: null,
         province: null,
-        gangweiNum: null,
-        type: null,
-        fuwuzhanNum: null,
-        otherNum: null,
-        nojobNum: null,
-        comment: null
+        docName: null,
+        docRef: null,
+        creator: null,
+        createTime: null,
+        fileList: []
       }
     },
     handleEdit (index, rowData) {
-      console.log(index, rowData, this.formData)
+      console.log(index, rowData)
       this.resetForm();
       this.action = 'edit';
       Object.keys(this.formData).forEach(item => {
@@ -243,7 +245,7 @@ export default {
         let config = {
           baseURL: '/api/v1',
           paramSerializerJQLikeEnabled: true,
-          url: '/gangwei/delete',
+          url: '/zyfwzhengce/delete',
           method: 'post',
           data: {id: rowData.id}
         };
@@ -283,44 +285,40 @@ export default {
         baseURL: '/api/v1',
         // 请求参数以jquery.param方式进行序列化
         paramSerializerJQLikeEnabled: true,
-        url: '/gangwei/add',
+        url: '/zyfwzhengce/add',
         // to methods of that instance.
         method: 'post',
         // data仅用于post请求， 放在http请求体中
         data: data
       };
-       this.$refs['formData'].validate((valid) => {
-        if (valid) {
-          service.request(config)
-          .then(data => {
-            console.log(data);
-            if (data.id) {
-              this.$message({
-                message: '添加成功',
-                type: 'success'
-              });
-              this.formData.id = data.id;
-              this.formData.province = data.province;
-              this.tableData.unshift(this.formData);
-              this.dialogVisible = false;
-            } else {
-              this.$message({
-                message: '添加失败',
-                type: 'error'
-              });
-            } 
-          }, err => {
-            this.$alert(err.message);
+      service.request(config)
+      .then(data => {
+        console.log(data);
+        if (data.id) {
+          this.$message({
+            message: '添加成功',
+            type: 'success'
           });
-        }
-      })
+          this.formData.id = data.id;
+          this.formData.province = data.province;
+          this.tableData.unshift(this.formData);
+          this.dialogVisible = false;
+        } else {
+          this.$message({
+            message: '添加失败',
+            type: 'error'
+          });
+        }  
+      }, err => {
+        this.$alert(err.message);
+      });
     },
     confirmEdit () {
       let data = this.formData;
       let config = {
         baseURL: '/api/v1',
         paramSerializerJQLikeEnabled: true,
-        url: '/gangwei/update',
+        url: '/zyfwzhengce/update',
         method: 'post',
         data: data
       };
@@ -352,7 +350,7 @@ export default {
 }
 
 </script>
-<style lang="less">
+<style lang="less" scoped>
   .dialog-footer {
     text-align:center;
   }

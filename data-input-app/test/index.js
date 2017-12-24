@@ -7,12 +7,15 @@ let MockConf = {
 		a: 'aha'
 	},
   '/provinces/get': provinces,
-	'/zhengcechuangzhi/get': {'data': [
+	'/zhengcechuangzhi/get': {
+    'fileList': ['file1', 'file2', 'file3', 'file4'],
+    'data': [
     {
       'id': 1,
   		'province': '北京市',
       'docName': '《关于进下一步加快推进天津市青少年事务社会工作专业人才队伍建设的通知》',
-      'docRef': '（津团发〔2016〕73号）'
+      'docRef': '（津团发〔2016〕73号）',
+      'fileList': [{name: 'food.jpg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
   	},
     {
       'id': 2,
@@ -102,16 +105,15 @@ let MockConf = {
     'data': [{
       'id': 1,
       'province': '北京',
-      'level': '地市级',
-      'type': '1',
-      'relate': '大兴区、延庆区、顺义区、密云县'
+      'type': 1,
+      'level': 2
     },
     {
       'id': 2,
       'province': '天津',
-      'level': '地市级',
       'type': '2',
-      'relate': '无'
+      'level': 1,
+
     },
     {
       'id': 3,
@@ -158,7 +160,19 @@ let MockConf = {
   '/xingzhengjigou/delete': {},
   '/hangyexiehui/add': {id: 33},
   '/gangwei/add': {id: 33},
-  '/fuwuzhandian/add': {id: 33},
+  '/minbanjigou/add': {id: 33},
+  '/zijintouru/add': {id: 33},
+  '/rencaiziyuan/add': {id: 33},
+  '/rencaipeixun/add': {id: 33},
+  '/shehuishidian/add': {id: 33},
+  '/zyfwzhengce/add': {id: 33},
+  '/zyfwzuzhi/add': {id: 33},
+  '/zyzzhuce/add': {id: 33},
+  '/zyzpeixun/add': {id: 33},
+  '/jilugongzuo/add': {id: 33},
+  '/huodongkaizhan/add': {id: 33},
+  '/jilibaozhang/add': {id: 33},
+  '/zyfwzijin/add': {id: 33}
 }
 
 Object.keys(MockConf).forEach((url) => {
