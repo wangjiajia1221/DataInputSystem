@@ -35,7 +35,7 @@
               <el-input auto-complete="off" v-model.number="formData.minzheng"></el-input>
             </el-form-item>
             <el-form-item
-              label="公安:"
+              label="公安(禁毒办):"
               prop="gongan"
               :rules="[
                 { required: true, message: '数量不能为空'},
@@ -171,7 +171,7 @@
           <el-table-column
             prop="gongan"
             sortable
-            label="公安">
+            label="公安(禁毒办)">
           </el-table-column>
           <el-table-column
             prop="sifaxingzheng"

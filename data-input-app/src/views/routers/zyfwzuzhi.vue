@@ -14,6 +14,7 @@
           <el-card class="box-card">
             <div>1.请统计民政部门登记的、名称中含“志愿”或“义工”字样的社会组织数量，并按社会团体、社会服务机构、基金会三类分别提供名录；</div>
             <div>2.请统计全省社区志愿服务站点的总数，并提供社区志愿服务站点总体发展情况的文字材料。</div>
+            <div style="color: red">3.注意:"全省社区志愿服务站点数"仅填写一次！</div>
           </el-card>
         </div>
         <el-dialog
@@ -82,6 +83,17 @@
               <el-input 
                 placeholder="请填入单位和社区内部成立的志愿服务组织数"
                 auto-complete="off" v-model.number="formData.innerOrgNum"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="全省社区志愿服务站点数（个）:"
+              prop="totalNum"
+              
+              :rules="[
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input 
+                placeholder="仅能填写一次，重复填写将报错"
+                auto-complete="off" v-model.number="formData.totalNum"></el-input>
             </el-form-item>
             <el-form-item label="上传文件:">
               <el-upload
@@ -153,6 +165,11 @@
             sortable
             label="单位和社区内部成立的志愿服务组织数">
           </el-table-column>
+          <el-table-column
+            prop="totalNum"
+            sortable
+            label="全省社区志愿服务站点数（个）">
+          </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
@@ -199,6 +216,7 @@ export default {
         shfwjg: null,
         jjh: null,
         innerOrgNum: null,
+        totalNum: null,
         fileList: []
       },
       fileLists: [],
@@ -258,7 +276,9 @@ export default {
         shtt: null,
         shfwjg: null,
         jjh: null,
-        innerOrgNum: null
+        innerOrgNum: null,
+        totalNum: null,
+        fileList: []
       }
     },
     handleEdit (index, rowData) {
