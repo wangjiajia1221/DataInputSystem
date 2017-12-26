@@ -124,9 +124,11 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="description"
             sortable
             label="民政部本级彩票金社会工作和志愿服务项目”资金执行、结余情况及主要服务项目（活动）开展情况">
+            <template slot-scope="scope" v-if="scope.row.description">
+              {{utils.subString(scope.row.description, 50, true)}}
+            </template>
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
