@@ -2,12 +2,12 @@
   <div class="easy-pagination">
     <slot :data="currentItems">
     </slot>
-    <Pagination
+    <el-pagination
       layout="prev, pager, next"
       :page-count="pageCount"
       :current-page="currentPage"
       @current-change="currentChange">
-    </Pagination>
+    </el-pagination>
   </div>
 </template>
 
@@ -24,11 +24,11 @@ export default Vue.component('easy-pagination', {
     return {
       items: [],
       currentItems: [],
-      offset: 0,
-      limit: 10,
+      offset: 0, //传递给父组件，用于计算当前页及之前所有页的数据总量
+      limit: 10, //等同pageSize,用户传递给父组件
       total: 0,
       currentPage: 1,
-      pageSize: 10
+      pageSize: 10 //每页数量
     };
   },
   methods: {
@@ -52,12 +52,6 @@ export default Vue.component('easy-pagination', {
   computed: {
     pageCount () {
       return Math.ceil(this.total / this.pageSize);
-    },
-    pageRangeMax () {
-      return Math.floor((this.offset + this.limit) / this.pageSize);
-    },
-    pageRangeMin () {
-      return Math.ceil(this.offset / this.pageSize) + 1;
     }
   },
   watch: {
@@ -65,8 +59,10 @@ export default Vue.component('easy-pagination', {
       this.currentItems = this.getCurrentPageTableData();
     },
     data (val, oldVal) {
-      this.items = val.items;
-      this.total = val.total;
+      this.items = val;
+      this.total = val.length;
+      this.pageRangeMax = Math.floor((this.offset + this.limit) / this.pageSize);
+      this.pageRangeMin = Math.ceil(this.offset / this.pageSize) + 1;
       this.currentItems = this.getCurrentPageTableData();
     },
     currentItems (val, oldVal) {

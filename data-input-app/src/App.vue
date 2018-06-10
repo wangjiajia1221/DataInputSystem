@@ -12,6 +12,7 @@
 
 <script>
 import navMenu from './menu.vue'
+import './views/components/easy-pagination/index.vue';
 
 export default {
   name: 'app',

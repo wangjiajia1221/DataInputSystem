@@ -79,69 +79,77 @@
             <el-button type="primary" @click="confirmEdit" v-if="action=='edit'">确 定</el-button>
           </div>
         </el-dialog>
-        <el-table
-        :data="tableData"
-        border
-        style="width: 95%;margin-left:20px">
-          <el-table-column
-            width="50"
-            label="序号">
-            <template slot-scope="scope">{{ scope.$index + 1 }}</template>
-          </el-table-column>
-          <el-table-column
-            prop="province"
-            sortable
-            label="省/直辖市">
-          </el-table-column>
-          <el-table-column
-            prop="docName"
-            sortable
-            label="文件名称">
-          </el-table-column>
-          <el-table-column
-            prop="docRef"
-            sortable
-            label="发文文号">
-          </el-table-column>
-          <el-table-column
-            prop="creator"
-            sortable
-            label="发文单位">
-          </el-table-column>
-          <el-table-column
-            prop="createTime"
-            sortable
-            label="发文时间">
-          </el-table-column>
-<!--           <el-table-column
-            sortable
-            label="文件">
-            <template slot-scope="scope" v-if="scope.row.fileList">
-              <a :href="scope.row.fileList[0].url">{{scope.row.fileList[0].name}}</a>
-            </template>
-          </el-table-column> -->
-          <el-table-column label="操作">
-            <template slot-scope="scope">
-              <el-button
-                size="mini"
-                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-              <el-button
-                size="mini"
-                type="danger"
-                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-card class="box-card" style="width: 80%; text-align: left; margin:20px 0 0 20px; font-size: 16px">
-          <div slot="header" class="clearfix">
-            当前用户已上传的文件列表：
-          </div>
-            <ol>
-              <li v-for="file in fileLists">
-                {{file}}
-              </li>
-            </ol>
-        </el-card>
+        <easy-pagination :data="tableData">
+          <template scope="props">
+            <el-table
+            :data="props.data"
+            border
+            style="width: 95%;margin-left:20px">
+              <el-table-column
+                width="50"
+                label="序号">
+                <template slot-scope="scope">{{ scope.$index + 1 }}</template>
+              </el-table-column>
+              <el-table-column
+                prop="province"
+                sortable
+                label="省/直辖市">
+              </el-table-column>
+              <el-table-column
+                prop="docName"
+                sortable
+                label="文件名称">
+              </el-table-column>
+              <el-table-column
+                prop="docRef"
+                sortable
+                label="发文文号">
+              </el-table-column>
+              <el-table-column
+                prop="creator"
+                sortable
+                label="发文单位">
+              </el-table-column>
+              <el-table-column
+                prop="createTime"
+                sortable
+                label="发文时间">
+              </el-table-column>
+    <!--           <el-table-column
+                sortable
+                label="文件">
+                <template slot-scope="scope" v-if="scope.row.fileList">
+                  <a :href="scope.row.fileList[0].url">{{scope.row.fileList[0].name}}</a>
+                </template>
+              </el-table-column> -->
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </template>
+        </easy-pagination>
+        <easy-pagination :data="fileLists">
+          <template scope="props">
+            <el-card class="box-card" style="width: 80%; text-align: left; margin:20px 0 0 20px; font-size: 16px">
+              <div slot="header" class="clearfix">
+                当前用户已上传的文件列表：
+              </div>
+                <ol>
+                  <li v-for="file in props.data">
+                    {{file}}
+                  </li>
+                </ol>
+            </el-card>
+          </template>
+        </easy-pagination>
       </el-tab-pane>
     </el-tabs>
   </div>

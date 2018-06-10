@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import routerConf from './config/routerConf'
-// require('../test');
+require('../test');
 
 Vue.use(VueRouter);
 Vue.use(Element);
