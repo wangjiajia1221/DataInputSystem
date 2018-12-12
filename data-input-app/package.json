@@ -10,7 +10,6 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "@bbfe/data-provider": "^0.0.7",
     "element-ui": "^2.0.5",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
