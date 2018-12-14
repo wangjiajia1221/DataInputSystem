@@ -37,10 +37,10 @@ const Router = [
       path: '/zhengcechuangzhi',
       component: Zhengcechuangzhi
     },
-    {
-      path: '/xingzhengjigou',
-      component: Xingzhengjigou
-    },
+    // {
+    //   path: '/xingzhengjigou',
+    //   component: Xingzhengjigou
+    // },
     {
       path: '/gangwei',
       component: Gangwei

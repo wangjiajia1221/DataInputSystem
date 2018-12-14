@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div class="top-add">
           <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
         </div>
         <div class="top-container">
-          <el-tag type="success">志愿者注册情况统计表</el-tag>
+          <el-tag type="success">表11：志愿者注册情况统计表</el-tag>
         </div>
         <el-dialog
           title="添加数据"
@@ -120,7 +120,7 @@ export default {
       utils: utils,
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },

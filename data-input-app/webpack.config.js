@@ -27,7 +27,10 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        options: {
+          plugins: ['transform-decorators-legacy','transform-decorators']
+        }
       },
       {
       test: /\.less$/,
@@ -54,7 +57,10 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.js'
+      'vue$': 'vue/dist/vue.js',
+      '$views': path.resolve('src/views'),
+      '$config': path.resolve('src/config'),
+      '$services': path.resolve('src/services'),
     },
     extensions: ['*', '.js', '.vue', '.json']
   },

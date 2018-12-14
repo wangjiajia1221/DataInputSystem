@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div class="top-add">
           <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
         </div>
         <div class="top-container">
-          <el-tag type="success">民办社会工作服务机构情况统计表</el-tag>
+          <el-tag type="success">表6：民办社会工作服务机构情况统计表</el-tag>
         </div>
         <el-dialog
           title="添加数据"
@@ -153,7 +153,7 @@ export default {
       levels: ['0', '省级民政部门登记', '地市级民政部门登记', '县区级民政部门登记'],
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },

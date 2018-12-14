@@ -1,19 +1,20 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:70%;vertical-align:top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">社会工作试点示范、工程、计划、项目开展情况统计表</el-tag>
+            <el-tag type="success">表8：社会工作试点示范、工程、计划、项目开展情况统计表</el-tag>
           </div>
         </div>
         <div style="display:inline-block;text-align:left;width:25%">
           <el-card class="box-card">
-            <div>1.只填写在省级和地市级范围内开展的社会工作试点示范、工程、计划和项目；</div>
-            <div>2.不包括民政部在本辖区实施的活动。</div>
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
+            <div>1.只填写在省级和地市级范围内开展的社会工作试点示范、工程、计划和项目；不包括民政部在本辖区实施的活动；</div>
+            <div>2.覆盖贫困地区数量统计应区分贫困县、贫困村两级，分别填写数量。贫困地区为国家扶贫开发工作重点县、集中连片特困地区覆盖县和国家深度贫困地区覆盖县。</div>
           </el-card>
         </div>
         <el-dialog
@@ -26,7 +27,7 @@
             </el-form-item>
             <el-form-item label="类别:" >
               <el-select placeholder="请选择类别" v-model="formData.type">
-                <el-option v-for="index in 2" :label="types[index]" :value="index"></el-option>
+                <el-option v-for="index in 3" :label="types[index]" :value="index"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item
@@ -52,6 +53,24 @@
               ]"
               prop="areaUnit">
               <el-input auto-complete="off" v-model="formData.areaUnit"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="覆盖贫困地区县/村数量（个）:"
+              prop="num"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.num"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="投入资金（万元）:"
+              prop="trzj"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.trzj"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -98,6 +117,16 @@
             sortable
             label="开展的地区和单位名称">
           </el-table-column>
+          <el-table-column
+            prop="num"
+            sortable
+            label="覆盖贫困地区县/村数量（个）">
+          </el-table-column>
+          <el-table-column
+            prop="trzj"
+            sortable
+            label="投入资金（万元）">
+          </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
@@ -135,11 +164,13 @@ export default {
       },
       utils: utils,
       types: ['0', 
+        '社会工作参与脱贫攻坚示范项目',
         '社会工作试点示范', 
-        '社会工作工程、计划、项目'],
+        '社会工作工程、计划、项目',
+        ],
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },

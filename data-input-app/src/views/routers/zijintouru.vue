@@ -1,18 +1,20 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:70%;vertical-align:top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">社会工作资金投入情况统计表</el-tag>
+            <el-tag type="success">表7：社会工作资金投入情况统计表</el-tag>
           </div>
         </div>
         <div style="display:inline-block;text-align:left;width:25%">
           <el-card class="box-card">
-            <div>只统计2017年数据，统计数字要真实有据，具体到万元。</div>
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
+            <div>只统计2018年数据，统计数字要真实有据，具体到万元；</div>
+            <div>本省范围统计中，不包括民政部在本辖区投入的资金。</div>
           </el-card>
         </div>
         <el-dialog
@@ -38,7 +40,7 @@
               <el-input 
                 type="textarea"
                 :rows="4"
-                placeholder="请填入民政部本级彩票金社会工作和志愿服务项目”资金执行、结余情况及主要服务项目（活动）开展情况:"
+                placeholder="请填入“民政部本级彩票金社会工作和志愿服务项目”资金使用方式及用途（开展项目、活动名称及简介）:"
                 auto-complete="off" 
                 v-model="formData.description"></el-input>
             </el-form-item>
@@ -125,7 +127,7 @@
           </el-table-column>
           <el-table-column
             sortable
-            label="民政部本级彩票金社会工作和志愿服务项目”资金执行、结余情况及主要服务项目（活动）开展情况">
+            label="“民政部本级彩票金社会工作和志愿服务项目”资金使用方式及用途（开展项目、活动名称及简介）">
             <template slot-scope="scope" v-if="scope.row.description">
               {{utils.subString(scope.row.description, 50, true)}}
             </template>
@@ -174,7 +176,7 @@ export default {
         '民政部本级彩票金社会工作和志愿服务项目”资金执行、结余情况及主要服务项目（活动）开展情况'],
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },

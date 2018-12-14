@@ -1,18 +1,19 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:60%;vertical-align: top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">志愿服务资金投入情况统计表</el-tag>
+            <el-tag type="success">表16：志愿服务资金投入情况统计表</el-tag>
           </div>
         </div>
         <div style="display:inline-block;text-align:left;width:35%">
           <el-card class="box-card">
-            <div>1.只统计2017年数据，统计数字要真实有据，具体到万元；</div>
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
+            <div>1.只统计2018年数据，统计数字要真实有据，具体到万元；</div>
             <div>2.政府购买志愿服务运营管理的资金与财政性资金、彩票公益金、其他资金的统计不互斥。</div>
           </el-card>
         </div>
@@ -188,7 +189,7 @@ export default {
         '全省总计投入资金'],
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },

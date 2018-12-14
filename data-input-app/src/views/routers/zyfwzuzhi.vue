@@ -1,20 +1,23 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:60%;vertical-align: top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">志愿服务组织情况统计表</el-tag>
+            <el-tag type="success">表10：志愿服务组织情况统计表</el-tag>
           </div>
         </div>
         <div style="display:inline-block;text-align:left;width:35%">
           <el-card class="box-card">
-            <div>1.请统计民政部门登记的、名称中含“志愿”或“义工”字样的社会组织数量，并按社会团体、社会服务机构、基金会三类分别提供名录；</div>
-            <div>2.请统计全省社区志愿服务站点的总数，并提供社区志愿服务站点总体发展情况的文字材料。</div>
-            <div style="color: red">3.注意:"全省社区志愿服务站点数"仅填写一次！</div>
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
+            <div>1.请统计依法成立、以开展志愿服务为宗旨的志愿服务组织数量，并按社会团体、社会服务机构、基金会三类分别提供名录；</div>
+            <div>2.请按层级统计在单位内部成立的志愿服务队伍数量；</div>
+            <div>3.请统计社区内部成立的志愿服务队伍总数；</div>
+            <div>4.请统计全省社区志愿服务站点的总数，并提供社区志愿服务站点总体发展情况的文字材料。</div>
+            <div style="color: red">注意:"社区内部成立的志愿服务队伍总数"和"全省社区志愿服务站点数"仅填写一次！</div>
           </el-card>
         </div>
         <el-dialog
@@ -73,16 +76,25 @@
               <el-input auto-complete="off" v-model.number="formData.jjh"></el-input>
             </el-form-item>
             <el-form-item
-              label="内部成立组织数:"
+              label="单位内部成立的志愿服务队伍数（个）:"
               prop="innerOrgNum"
               
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
-              <el-input 
-                placeholder="请填入单位和社区内部成立的志愿服务组织数"
+              <el-input
                 auto-complete="off" v-model.number="formData.innerOrgNum"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="社区内部成立的志愿服务队伍总数（个）:"
+              prop="sqTotalNum"
+              :rules="[
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input 
+                placeholder="仅能填写一次，重复填写将报错"
+                auto-complete="off" v-model.number="formData.sqTotalNum"></el-input>
             </el-form-item>
             <el-form-item
               label="全省社区志愿服务站点数（个）:"
@@ -163,7 +175,12 @@
           <el-table-column
             prop="innerOrgNum"
             sortable
-            label="单位和社区内部成立的志愿服务组织数">
+            label="单位内部成立的志愿服务队伍数（个）">
+          </el-table-column>
+          <el-table-column
+            prop="sqTotalNum"
+            sortable
+            label="社区内部成立的志愿服务队伍总数（个）">
           </el-table-column>
           <el-table-column
             prop="totalNum"
@@ -223,7 +240,7 @@ export default {
       utils: utils,
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       levels: ['0', '省级', '地市级', '县区级'],
       provinces: provinces.provinces
     }

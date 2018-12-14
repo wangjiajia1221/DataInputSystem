@@ -1,20 +1,21 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:70%;vertical-align: top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">出台社会工作政策情况统计表</el-tag>
+            <el-tag type="success">表1：出台社会工作政策情况统计表</el-tag>
           </div>
         </div>
         <div style="display:inline-block;text-align:left;width:25%">
           <el-card class="box-card">
-            <div>1.只填报2017年出台的政策；</div>
-            <div>2.只统计省委、省政府及省级民政部门单独或联合相关部门出台的社会工作政策文件（含规划、标准）；</div>
-            <div>3.请同时提供政策文本。</div>
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
+            <div>1.只填报2018年出台的政策；</div>
+            <div>2.只统计省委、省人大、省政府及省级民政部门单独或联合相关部门出台的社会工作法规政策文件（含法规、规划、标准）；</div>
+            <div>3.请在系统中以上传附件的形式，提供政策文本。</div>
           </el-card>
         </div>
         <el-dialog
@@ -179,7 +180,7 @@ export default {
       provinces: provinces.provinces,
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017'
+      defaultYear: '2018'
     }
   },
   mounted () {

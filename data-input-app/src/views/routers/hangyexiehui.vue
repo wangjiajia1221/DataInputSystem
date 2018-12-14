@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div class="top-add">
           <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
         </div>
         <div class="top-container">
-          <el-tag type="success">社会工作行业协会情况统计表</el-tag>
+          <el-tag type="success">表5：社会工作行业协会情况统计表</el-tag>
         </div>
         <el-dialog
           title="添加数据"
@@ -24,8 +24,7 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="行业协会数量:"
-              
+              label="社会工作行业协会数量:"
               prop="xiehuiNum"
               :rules="[
                 { required: true, message: '数量不能为空'},
@@ -36,12 +35,29 @@
             <el-form-item
               label="成立党组织数量:"
               prop="orgNum"
-              
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
               ]">
               <el-input auto-complete="off" v-model.number="formData.orgNum"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="行业协会单位会员数量（个）:"
+              prop="xiehuiOrgNum"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.xiehuiOrgNum"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="行业协会个人会员数量（人）:"
+              prop="xiehuiPerNum"
+              :rules="[
+                { required: true, message: '数量不能为空'},
+                { type: 'number', message: '必须为数字值'}
+              ]">
+              <el-input auto-complete="off" v-model.number="formData.xiehuiPerNum"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -82,6 +98,16 @@
             sortable
             label="成立党组织数量(个)">
           </el-table-column>
+          <el-table-column
+            prop="xiehuiOrgNum"
+            sortable
+            label="行业协会单位会员数量（个）">
+          </el-table-column>
+          <el-table-column
+            prop="xiehuiPerNum"
+            sortable
+            label="行业协会个人会员数量（人）">
+          </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
@@ -103,6 +129,7 @@
 import DataProvider from '@bbfe/data-provider';
 import provinces from '../../config/provinces'
 import utils from '../../utils'
+import confirm from '$services/confirm'
 
 let service = new DataProvider();
 export default {
@@ -118,7 +145,7 @@ export default {
       },
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       levels: ['0', '在省级民政部门登记的', '在地市级民政部门登记的', '在县区级民政部门登记的'],
       utils: utils,
       provinces: provinces.provinces
@@ -205,6 +232,7 @@ export default {
         });          
       });
     },
+    // @confirm()
     handleAdd () {
       this.resetForm();
       this.action = 'add';

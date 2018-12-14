@@ -1,17 +1,18 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:60%;vertical-align:top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">社会工作专业人才资源情况统计表</el-tag>
+            <el-tag type="success">表3：社会工作专业人才资源情况统计表</el-tag>
           </div>
         </div>
         <div style="display:inline-block;text-align:left;width:35%">
           <el-card class="box-card">
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
             <div>1.社会工作专业人才定义参照《中央组织部办公厅、民政部办公厅关于开展全国社会工作专业人才资源统计的通知》（民办函〔2016〕151号）；</div>
             <div>2.请民政部门积极协调相关部门提供数据，对于无法提供数据的部门不作强行要求；</div>
             <div>3.统计截止日期根据各部门实际掌握的数据情况确定，越新越好，请具体注明。</div>
@@ -107,7 +108,7 @@
               <el-input auto-complete="off" v-model.number="formData.renlishebao"></el-input>
             </el-form-item>
             <el-form-item
-              label="卫生计生:"
+              label="卫健:"
               prop="weishengjisheng"
               :rules="[
                 { required: true, message: '数量不能为空'},
@@ -211,7 +212,7 @@
           <el-table-column
             prop="weishengjisheng"
             sortable
-            label="卫生计生">
+            label="卫健">
           </el-table-column>
           <el-table-column
             prop="xinfang"
@@ -230,7 +231,7 @@
           </el-table-column>
           <el-table-column
             sortable
-            label="社会工作专业人才总量">
+            label="总计">
             <template slot-scope="scope">
               {{sum(scope.row)}}
             </template>
@@ -282,7 +283,7 @@ export default {
       utils: utils,
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },

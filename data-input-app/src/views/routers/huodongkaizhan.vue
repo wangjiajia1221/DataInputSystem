@@ -1,20 +1,21 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:60%;vertical-align: top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">志愿服务活动开展情况统计表</el-tag>
+            <el-tag type="success">表13：志愿服务活动开展情况统计表</el-tag>
           </div>
         </div>
         <div style="display:inline-block;text-align:left;width:35%">
           <el-card class="box-card">
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
             <div>1.志愿服务总时数在全省范围内进行历年累计统计，不限于省级重点志愿服务活动；</div>
-            <div>2.志愿服务总时数中能区分2017年服务时间的，请单独注明2017年度志愿服务时数；</div>
-            <div>3.省级重点志愿服务活动包括但不限于：试点示范、工程计划、品牌项目等。</div>
+            <div>2.志愿服务总时数中能区分2018年服务时间的，请单独注明2018年度志愿服务时数；</div>
+            <div>3.省级重点志愿服务活动项目包括但不限于：试点示范、工程计划、品牌项目等，请同时提供照片。</div>
           </el-card>
         </div>
         <el-dialog
@@ -135,7 +136,7 @@ export default {
       utils: utils,
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },

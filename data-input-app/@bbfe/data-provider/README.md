@@ -1,130 +1,174 @@
-# Data provider [NEW]
+[TOC]
 
-**基于Fetch规范的请求处理模块**，提供对Request和Response对象的切面，具备请求合并的能力。
+# Data provider [LEGACY]
+
 
 ## Links
-- [Fetch_API](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API)
-- [旧版 data-provider](https://github.com/g-bbfe/data-provider/tree/legacy) 
+- [axios](https://github.com/axios/axios)
+- [新版 data-provider](https://github.com/g-bbfe/data-provider/tree/master) 
 
 ## Install
 
 ```shell
-npm install @bbfe/data-provider
+# legacy 版本的 major 版本为 0
+npm install @bbfe/data-provider@0.x.x
 ```
+
+
+## Features
+
+- 提供面向切面的统一处理能力， 分为三个阶段`request`请求发起前， `response` 接收到正常响应时, `error` 接收响应异常时
+- 高频发生请求的合并处理功能
+
 
 ## Quick Start
 
-```javascript
-import DataProvider from 'data-provider';
-import pathToRegexp from 'path-to-regexp';
-import { isObject } from 'lodash';
+### Usage
 
-let baseURL = 'http://mock.bbfe.group/mock/5a1e89e8d3ef9a75725992d3/snc/api/v1';
-let id = 0;
+参考`examples/dataService.js` 示例, 运行examples命令
 
-const urlCompiler = (path, params) => {
-  let url = pathToRegexp.compile(path)(params);
-  return url;
-};
+```
+npm run dev
+```
 
-let dataProvider = new DataProvider({
-  timeout: 5000,
-  requestIdResolver: function(options) {
-    return options.method === 'GET' ? JSON.stringify({ options }) : id++;
-  }
-});
+#### 拦截器的用法
 
-dataProvider.addRequestInterceptor(request => {
-  console.log('--------------request:', request);
-  return request;
-});
+ **请注意**：拦截器的每个切面接受请求config参数， 应该返回一个 Promise， 以完成后续流程。 
 
-dataProvider.addResponseInterceptor(response => {
-  console.log('--------------response:', response);
-  return response;
-});
+1. 编写一个拦截器。 一个拦截器的结构如下
 
-const request = async (url, method, body, query) => {
-  let options = {
-    url,
-    method,
-    baseURL: baseURL || '',
-    headers: {
-      'Content-Type': 'application/json'
+```
+// example/interceptors/fixParams.js
+export default {
+    request: async (config) => {
+        // 给所有的get请求添加一个_t参数 
+        let baseParams = {
+        	_t:  +new Date()//1314
+        };
+
+        return new Promise((resolve, reject) => {
+            let assignTarget = config.method === 'get' ? 'params' : 'data';
+            config[assignTarget] = config[assignTarget] || {};
+            Object.assign(config[assignTarget], baseParams);
+            resolve(config);
+        })
+    },
+    response: async (config) => {
+      // return Promise
+    },
+    error: async (config) => {
+      // return Promise
     }
-  };
-  if (body) {
-    options.body = isObject(body) ? JSON.stringify(body) : body;
-  }
-  if (query) {
-    options.query = query;
-  }
-  let res = await dataProvider.request(options);
-  if (res instanceof Error || res.status === 204) {
-    return res;
-  } else {
-    return res.clone().json();
-  }
-};
-
-
-async getAdmin({ path, params }) {
-  let url = urlCompiler(path, params);
-  let data = await request(url, 'GET');
-  return data;
 }
+```
 
-getAdmin({ path: '/admins/:adminId', params: { adminId: 1 } })
-.then(data => {
-  if (data instanceof Error) {
-    console.log(data.toString());
-  } else {
-    conselo.log(data);
-  }
-});
+2.  在data-source-gateway中注册拦截器
+
+```
+// example/dataService.js
+
+import DataProvider from '@bbfe/data-provider';
+import fixParamsInterceptor from './interceptors/FixParams';
+
+// 创建一个DataProvider实例
+var service = new DataProvider();
+
+// 面向切面: 按顺序组装拦截器
+service
+    .interceptors.request.use(fixParamsInterceptor.request)
+    .interceptors.error.use(errorProcessorInterceptor.error)
 
 ```
 
-## Options 
+#### 控制频发请求是否合并
 
-### `new DataProvider(options)`
+`data-provider` 在配置中提供了一个开关 `comboRequestEnabled` 来决定是否合并频发请求。 
 
-初始化DataProvider 实例需要的参数如下：
+可以在`data-provider.request(config)` 的基础上封装语法糖， 简化config的传入操作。
 
-| 参数名 | 默认值 | 参数类型 | 说明 |
-| :--: | :--: | :--: | :------ |
-|timeout|5000|Number|请求超时的时间|
-|requestIdResolver|() => id++|Function|用于产生请求id的策略函数，如果多个请求的id相等，则这几个请求会被合并。|
+以封装的data-source-gateway 为例：
 
-### `dataProvider.request(options)`
+```
+// example/dataService.js
 
-DataProvider实例发起请求时需要的参数如下：
+var DataService = {
 
-|参数名|默认值|参数类型|说明|
-| :--: | :--: | :--: | :------ |
-|url|-(必传)|string|资源的URL（包含param） |
-|headers|{'Accept':'application/json, text/plain, \*/*'}|object|请求头，Accept已经默认加上了。|
-|method|'GET'|string|请求的方法|
-|baseURL|-|string|提供了这个参数的话，他会被拼接到url的前面|
-|body|-|string/object|请求数据，可以是Blob, BufferSource, FormData, URLSearchParams, 或 USVString对象（from [mdn](https://developer.mozilla.org/zh-CN/docs/Web/API/Request/Request)）|
-|query|-|string/object|query参数，会被拼接到url的后面|
-|mode|'cors'|string|请求的模式, 比如 cors, no-cors, same-origin, 或 navigate。默认值应该为 cors。（from [mdn](https://developer.mozilla.org/zh-CN/docs/Web/API/Request/Request)）|
-|credentials|'include'|string|想要在请求中使用的credentials：: omit, same-origin, 或 include。data-provider将其默认设为了include，即一直会带上cookie。如果不希望这样，需要自行将其设为omit。|
-|cache|'default'|string|请求中想要使用的cache mode。（from [mdn](https://developer.mozilla.org/zh-CN/docs/Web/API/Request/Request)）|
-|redirect|'follow'|string|对重定向处理的模式： follow, error, or manual。（from [mdn](https://developer.mozilla.org/zh-CN/docs/Web/API/Request/Request)）|
-|referrer|'client'|string|可选值no-referrer, client, 或一个 URL的 USVString 。（from [mdn](https://developer.mozilla.org/zh-CN/docs/Web/API/Request/Request)）|
-integrity|-|string|包括请求的 subresource integrity 值（from [mdn](https://developer.mozilla.org/zh-CN/docs/Web/API/Request/Request)）
+    post: function(uri, data) {
+        var config = {
+            url: uri,
+            method: 'post',
+            // to methods of that instance.
+            baseURL: baseURL,
+            // data仅用于post请求， 放在http请求体中
+            data: data
+        };
 
-除此之外，options也可以是一个**Request对象**，如果直接传入Request对象的话，data-provider会直接以这个Request对象发起请求。
+        return DataService.request(config);
 
-## Noticifications
-* 请确保body中的内容与headers里的Content-Type是对应的，否则可能会出现请求发送失败的情况，新版data-provider默认只添加'Accept'的相关headers。
-* 如果业务中需要针对不同的Content-Type对body进行序列化处理，如有需求， 可引入[qs](https://www.npmjs.com/package/qs)或[jquery-param](https://www.npmjs.com/package/jquery-param)等包。
-* 发送请求时，参数可能会包括param、query、body，其中param应该在传入url时就已经拼接在url里面了，只有query和body才应该以参数的形式传入。
-* query应该是个单层对象或字符串，如 { type: 'super', group: 1 } 或 'type=1&group=super' 或 '?type=1&group=super'。
-* data-provider.request返回的是一个Response对象，需要按业务需求对其执行json化或者其他操作(详细内容请参考mdn对Response的描述)。
-* cookie默认是一直会带上的，如果不希望带cookie，需要自行在options中将'credentials'设为'omit'。
+    },
 
+    get: function(uri, params) {
+
+        var config = {
+            url: uri,
+            // to methods of that instance.
+            baseURL: baseURL,
+            method: 'get',
+            // params仅用于get请求， 会拼接在url后面
+            params: params,
+            // 默认get请求可合并
+            comboRequestEnabled: true
+        };
+
+        return DataService.request(config);
+    },
+
+    // let {url, baseURL, method, params, comboRequestEnabled, paramSerializerJQLikeEnabled} = config
+    request: function(config) {
+    // paramSerializerJQLikeEnabled: 默认开启用jquery.param进行请求参数的序列化
+        let mixedConfig = { paramSerializerJQLikeEnabled, ...config };
+        return new Promise((resolve, reject) => {
+            service.request(mixedConfig)
+                .then(data => { resolve(data) }, err => { reject(err); })
+        });
+
+    },
+    start: () => {
+        service.start();
+    },
+    stop: () => {
+        service.stop();
+    }
+
+}
+```
+
+### API
+
+data-provider 判断请求是否成功的标准为 response httpCode 是否为 2xx
+
+#### Constructor Params
+- `workerCount` 默认是 10
+- `strategy` response 处理策略，类型是 Function，参数为(data, status, resolve, reject)，内置默认策略，
+http 2xx 如果返回值中存在 error 属性或 code 属性，则标记为 Biz Error
+
+#### Instance Methods
+
+- `request`开始一个请求流程
+- `start` 开始接受请求任务
+- `stop` 停止接受请求处理任务
+
+#### Static Methods
+
+- `createError` 创建一个Error类型的异常
+- `createComboPromise`合并promise
+
+#### Static Properties
+
+- `ErrorType`
+- `Deferred`  一个延迟对象的构造函数
+
+  ​
 
 
 

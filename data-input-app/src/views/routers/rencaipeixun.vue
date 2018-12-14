@@ -1,20 +1,21 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:65%;vertical-align:top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">社会工作专业人才培训情况统计表</el-tag>
+            <el-tag type="success">表4：社会工作专业人才培训情况统计表</el-tag>
           </div>
         </div>
         <div style="display:inline-block;text-align:left;width:30%">
           <el-card class="box-card">
-            <div>1.只统计2017年数据，统计数据要真实有据，具体到个位数;</div>
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
+            <div>1.只统计2018年数据，统计数据要真实有据，具体到个位数;</div>
             <div>2.统计范围不限于民政部门组织的培训;</div>
-            <div>3.包括省级、地市级、县区级组织的培训都在统计范围内。</div>
+            <div>3.统计范围包括省级、地市级、县区级组织的培训。</div>
           </el-card>
         </div>
         <el-dialog
@@ -114,7 +115,7 @@ export default {
       utils: utils,
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },

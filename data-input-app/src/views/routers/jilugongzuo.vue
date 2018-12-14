@@ -1,21 +1,22 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:70%;vertical-align: top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">志愿服务记录工作开展情况统计表</el-tag>
+            <el-tag type="success">表14：志愿服务记录工作开展情况统计表</el-tag>
           </div>
         </div>
-        <div style="display:inline-block;text-align:left;width:25%">
+        <!-- <div style="display:inline-block;text-align:left;width:25%">
           <el-card class="box-card">
-            <div>1.请统计所有已出台志愿服务记录实施方案的地区名称，不限于2017年；</div>
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
+            <div>1.请统计所有已出台志愿服务记录实施方案的地区名称，不限于2018年；</div>
             <div>2.请同时提供实施方案的政策文本。</div>
           </el-card>
-        </div>
+        </div> -->
         <el-dialog
           title="添加数据"
           :visible.sync="dialogVisible"
@@ -187,7 +188,7 @@ export default {
       utils: utils,
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },

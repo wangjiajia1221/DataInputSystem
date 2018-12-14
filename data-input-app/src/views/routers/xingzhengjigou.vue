@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:70%;vertical-align:top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
@@ -12,6 +12,7 @@
         </div>
         <div style="display:inline-block;text-align:left;width:25%">
           <el-card class="box-card">
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
             <div>1.请分类提供省级、地市级、县区级社会工作行政管理机构的具体名称；</div>
             <div>2.不符合以上四类情况的不统计。</div>
           </el-card>
@@ -140,7 +141,7 @@ export default {
       levels: ['0', '省级', '地市级', '县级'],
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },

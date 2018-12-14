@@ -1,19 +1,21 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:70%;vertical-align:top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">社会工作岗位开发设置情况统计表</el-tag>
+            <el-tag type="success">表2：社会工作岗位开发设置情况统计表</el-tag>
           </div>
         </div>
         <div style="display:inline-block;text-align:left;width:25%">
           <el-card class="box-card">
-            <div>1.对于社会工作岗位及职责的定义参照《关于加强社会工作专业岗位开发与人才激励保障的意见》（民发〔2017〕186号）；</div>
-            <div>2.分类统计所辖范围内各类单位设置社会工作服务站（科室、中心）情况。</div>
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
+            <div>1.社会工作岗位及职责的定义参照《关于加强社会工作专业岗位开发与人才激励保障的意见》（民发〔2017〕186号）；</div>
+            <div>2.社会工作服务站（室、中心）应是明确设立，实际功能为提供社会工作服务的站（室、中心）；</div>
+            <div>3.分类统计所辖范围内各类单位中设置社会工作岗位、站（科室、中心）等情况；</div>
           </el-card>
         </div>
         <el-dialog
@@ -26,11 +28,7 @@
             </el-form-item>
             <el-form-item label="类别:" >
               <el-select placeholder="请选择类别" v-model="formData.type">
-                <el-option :label="types[1]" value="1"></el-option>
-                <el-option :label="types[2]" value="2"></el-option>
-                <el-option :label="types[3]" value="3"></el-option>
-                <el-option :label="types[4]" value="4"></el-option>
-                <el-option :label="types[5]" value="5"></el-option>
+                <el-option v-for="i in 5" :label="types[i]" :value="i"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item
@@ -62,11 +60,10 @@
                 { type: 'number', message: '必须为数字值'}
               ]">
               <el-input auto-complete="off" v-model.number="formData.otherNum"></el-input>
-            </el-form-item>
+            </el-form-item>           
             <el-form-item
               label="已取得社会工作学历学位、职业资格或培训证书，但未从事社会工作的（人）:"
               prop="nojobNum"
-              
               :rules="[
                 { required: true, message: '数量不能为空'},
                 { type: 'number', message: '必须为数字值'}
@@ -137,6 +134,13 @@
           </el-table-column>
           <el-table-column
             sortable
+            label="总计（人）">
+            <template slot-scope="scope">
+              {{sum(scope.row)}}
+            </template>
+          </el-table-column>
+          <el-table-column
+            sortable
             label="备注">
             <template slot-scope="scope" v-if="scope.row.comment">
               {{utils.subString(scope.row.comment, 50, true)}}
@@ -180,10 +184,10 @@ export default {
         comment: null
       },
       utils: utils,
-      types: ['0', '乡镇、街道和社区', '行政机关', '民政事业单位', '民政部门作为业务主管单位的社会组织', '其他（请在备注注明）'],
+      types: ['0', '乡镇、街道和社区', '民政事业单位', '其他系统事业单位', '社会组织', '其他（请在备注注明）'],
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },
@@ -191,6 +195,15 @@ export default {
     this.getData();
   },
   methods: {
+    sum(rowData) {
+      let sum = 0;
+      Object.keys(rowData).forEach(item => {
+        // debugger
+        if(item!='id'&&item!='province'&&item!='type'&&item!='comment')
+        sum += parseInt(rowData[item]);
+      })
+      return sum;
+    },
     getData () {
       let params = {};
       let config = {

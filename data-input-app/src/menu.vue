@@ -19,10 +19,10 @@
             <i class="el-icon-menu"></i>
             <span slot="title">政策创制</span>
           </el-menu-item>
-          <el-menu-item index="/xingzhengjigou">
+          <!-- <el-menu-item index="/xingzhengjigou">
             <i class="el-icon-setting"></i>
             <span slot="title">行政机构</span>
-          </el-menu-item>
+          </el-menu-item> -->
           <el-menu-item index="/gangwei">
             <i class="el-icon-setting"></i>
             <span slot="title">社工岗位</span>
@@ -75,13 +75,13 @@
             <i class="el-icon-setting"></i>
             <span slot="title">志愿者培训</span>
           </el-menu-item>
-          <el-menu-item index="/jilugongzuo">
-            <i class="el-icon-setting"></i>
-            <span slot="title">记录工作</span>
-          </el-menu-item>
           <el-menu-item index="/huodongkaizhan">
             <i class="el-icon-setting"></i>
             <span slot="title">活动开展</span>
+          </el-menu-item>
+          <el-menu-item index="/jilugongzuo">
+            <i class="el-icon-setting"></i>
+            <span slot="title">记录工作</span>
           </el-menu-item>
           <el-menu-item index="/jilibaozhang">
             <i class="el-icon-setting"></i>

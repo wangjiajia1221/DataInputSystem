@@ -1,48 +1,41 @@
 {
-  "_args": [
-    [
-      "@bbfe/data-provider@1.0.3",
-      "/Users/jiajiawang/git_code/shield"
-    ]
+  "name": "@bbfe/data-provider",
+  "version": "0.1.1",
+  "description": "request manager with AOP interceptors and debouce abilities",
+  "keywords": [
+    "ajax",
+    "aop",
+    "interceptors",
+    "producer/consumer model",
+    "debounce"
   ],
-  "_from": "@bbfe/data-provider@1.0.3",
-  "_id": "@bbfe/data-provider@1.0.3",
-  "_inBundle": false,
-  "_integrity": "sha1-vDRQnnPsxxHdGxrB2tS7YvQN1Cg=",
-  "_location": "/@bbfe/data-provider",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "@bbfe/data-provider@1.0.3",
-    "name": "@bbfe/data-provider",
-    "escapedName": "@bbfe%2fdata-provider",
-    "scope": "@bbfe",
-    "rawSpec": "1.0.3",
-    "saveSpec": null,
-    "fetchSpec": "1.0.3"
-  },
-  "_requiredBy": [
-    "/"
+  "main": "./lib/index.js",
+  "files": [
+    "lib",
+    "src",
+    "test"
   ],
-  "_resolved": "http://registry.npm.taobao.org/@bbfe/data-provider/download/@bbfe/data-provider-1.0.3.tgz",
-  "_spec": "1.0.3",
-  "_where": "/Users/jiajiawang/git_code/shield",
-  "author": {
-    "name": "bbfe"
+  "scripts": {
+    "test": "node ./test/index.js",
+    "build": "rm -rf lib && babel src -d lib -s inline",
+    "dev": "npm run build && webpack-dev-server --hot --inline",
+    "pretty": "prettier --no-config --write '{src,examples}/**/*.js'",
+    "prepublish": "npm run pretty && npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/g-bbfe/data-provider.git"
+  },
+  "author": "bbfe",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/g-bbfe/data-provider/issues"
+    "url": "https://github.com/weimengxi/data-provider/issues"
   },
-  "dependencies": {
-    "lodash": "4.17.4",
-    "path-to-regexp": "2.1.0"
-  },
-  "description": "request manager with AOP interceptors",
+  "homepage": "https://github.com/weimengxi/data-provider#readme",
   "devDependencies": {
+    "axios-mock-adapter": "^1.7.1",
+    "axios-response-logger": "^0.1.0",
     "babel-cli": "6.26.0",
-    "babel-eslint": "7.1.1",
-    "babel-istanbul": "^0.12.2",
     "babel-loader": "^7.1.2",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-class-properties": "6.24.1",
@@ -50,43 +43,21 @@
     "babel-plugin-transform-es3-member-expression-literals": "6.22.0",
     "babel-plugin-transform-es3-property-literals": "6.22.0",
     "babel-plugin-transform-runtime": "6.23.0",
-    "babel-preset-env": "1.6.1",
+    "babel-preset-env": "1.6.0",
     "babel-preset-stage-2": "6.24.1",
-    "eslint": "^4.13.1",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-friendly-formatter": "^3.0.0",
-    "eslint-loader": "^1.7.1",
-    "eslint-plugin-html": "^3.2.2",
-    "eslint-plugin-promise": "^3.4.0",
-    "eslint-plugin-standard": "^2.0.1",
-    "istanbul": "0.4.5",
-    "mocha": "^4.0.1",
-    "node-fetch": "^1.7.3",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7"
+    "eslint": "^4.7.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-standard": "^3.0.1",
+    "prettier-miscellaneous": "^1.5.3",
+    "webpack": "^3.5.5",
+    "webpack-dev-server": "^2.7.1"
   },
-  "files": [
-    "lib",
-    "src",
-    "test"
-  ],
-  "homepage": "https://github.com/g-bbfe/data-provider#readme",
-  "keywords": [
-    "fetch",
-    "aop",
-    "interceptors"
-  ],
-  "license": "ISC",
-  "main": "./lib/index.js",
-  "name": "@bbfe/data-provider",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/g-bbfe/data-provider.git"
-  },
-  "scripts": {
-    "build": "rm -rf lib && babel src -d lib -s inline",
-    "dev": "npm run build && webpack-dev-server --hot --inline",
-    "test": "babel-node ./node_modules/.bin/babel-istanbul cover _mocha"
-  },
-  "version": "1.0.3"
+  "dependencies": {
+    "axios": "^0.15.3",
+    "babel-runtime": "6.26.0",
+    "events": "^1.1.1",
+    "jquery-param": "0.2.0",
+    "lodash.clonedeep": "4.5.0",
+    "querystring-es3": "^0.2.1"
+  }
 }

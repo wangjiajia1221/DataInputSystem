@@ -1,19 +1,20 @@
 <template>
   <div>
     <el-tabs v-model="defaultYear" type="card">
-      <el-tab-pane label="2017年" name="2017">
+      <el-tab-pane label="2018年" name="2018">
         <div style="display:inline-block;width:60%;vertical-align: top;">
           <div class="top-add">
             <el-button @click="handleAdd" type="primary" plain small>添加</el-button>
           </div>
           <div class="top-container">
-            <el-tag type="success">志愿者激励保障情况统计表</el-tag>
+            <el-tag type="success">表15：志愿者激励保障情况统计表</el-tag>
           </div>
         </div>
         <div style="display:inline-block;text-align:left;width:35%">
           <el-card class="box-card">
+            <div style="color: red;font-size: 16px;font-weight: 700">填写说明</div>
             <div>1.请梳理本地区激励保障志愿者的主要政策措施，并注明具体实施地区范围；</div>
-            <div>2.已出台的志愿者激励保障政策措施请提供政策文本，不限于2017年，不限于省级层面；</div>
+            <div>2.已出台的志愿者激励保障政策措施请提供政策文本红头扫描件，不限于2018年，不限于省级层面；</div>
             <div>3.激励保障资金投入在全省范围内统计，投入方向包括但不限于：志愿者保险、表彰奖励、公共服务优待等。</div>
           </el-card>
         </div>
@@ -162,7 +163,7 @@ export default {
       utils: utils,
       dialogVisible: false,
       action: 'add',
-      defaultYear: '2017',
+      defaultYear: '2018',
       provinces: provinces.provinces
     }
   },
