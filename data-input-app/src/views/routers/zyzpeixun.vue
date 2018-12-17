@@ -243,18 +243,18 @@ export default {
     resetForm () {
       this.formData = {
         id: null,
-        province: null,
-        jbdw: null,
-        pxbmc: null,
-        content: null,
-        peixunNum: null
+        province: "",
+        jbdw: "",
+        pxbmc: "",
+        content: "",
+        peixunNum: 0
       }
     },
     handleEdit (index, rowData) {
       console.log(index, rowData, this.formData)
       this.resetForm();
       this.action = 'edit';
-      Object.keys(this.formData).forEach(item => {
+      Object.keys(rowData).forEach(item => {
         this.formData[item] = rowData[item];
       })
       this.dialogVisible = true;

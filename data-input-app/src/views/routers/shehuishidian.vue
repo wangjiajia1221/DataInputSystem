@@ -213,7 +213,7 @@ export default {
       console.log(index, rowData, this.formData)
       this.resetForm();
       this.action = 'edit';
-      Object.keys(this.formData).forEach(item => {
+      Object.keys(rowData).forEach(item => {
         this.formData[item] = rowData[item];
       })
       this.dialogVisible = true;
