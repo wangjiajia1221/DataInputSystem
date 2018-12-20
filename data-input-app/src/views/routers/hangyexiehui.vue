@@ -153,6 +153,9 @@ export default {
   },
   mounted () {
     this.getData();
+    let person1 = "aaa";
+    let person2 = new String("bbb");
+    console.log("Person",String.prototype,"person1:",person1.prototype,"person2:",person2.prototype);
   },
   methods: {
     getData () {

@@ -199,7 +199,7 @@ export default {
       let sum = 0;
       Object.keys(rowData).forEach(item => {
         // debugger
-        if(item!='id'&&item!='province'&&item!='type'&&item!='comment')
+        if(item!='id'&&item!='province'&&item!='type'&&item!='comments')
         sum += parseInt(rowData[item]);
       })
       return sum;

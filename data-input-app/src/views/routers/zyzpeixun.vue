@@ -201,11 +201,15 @@ export default {
       tableData: [],
       formData: {
         id: null,
-        province: null,
-        jbdw: null,
-        pxbmc: null,
-        content: null,
-        peixunNum: null
+        province: "",
+        jbdw: "",
+        pxbmc: "",
+        content: "",
+        peixunNum: 0,
+        totalNum: 0,
+        jiguanTotalNum: 0,
+        fuwuzuzhiToalNum: 0,
+        otherTotalNum: 0
       },
       utils: utils,
       dialogVisible: false,
@@ -247,7 +251,11 @@ export default {
         jbdw: "",
         pxbmc: "",
         content: "",
-        peixunNum: 0
+        peixunNum: 0,
+        totalNum: 0,
+        jiguanTotalNum: 0,
+        fuwuzuzhiToalNum: 0,
+        otherTotalNum: 0
       }
     },
     handleEdit (index, rowData) {
