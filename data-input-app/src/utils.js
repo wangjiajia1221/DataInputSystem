@@ -4,6 +4,7 @@ export default {
     var newStr = "";
     var chineseRegex = /[^\x00-\xff]/g;
     var singleChar = "";
+    if(str == null) return "";
     var strLength = str.replace(chineseRegex, "**").length;
     for (var i = 0; i < strLength; i++) {
       singleChar = str.charAt(i).toString();
@@ -23,5 +24,5 @@ export default {
       newStr += "...";
     }
     return newStr;
-  }
+  },
 }

@@ -205,11 +205,11 @@ export default {
         jbdw: "",
         pxbmc: "",
         content: "",
-        peixunNum: 0,
-        totalNum: 0,
-        jiguanTotalNum: 0,
-        fuwuzuzhiToalNum: 0,
-        otherTotalNum: 0
+        peixunNum: null,
+        totalNum: null,
+        jiguanTotalNum: null,
+        fuwuzuzhiToalNum: null,
+        otherTotalNum: null
       },
       utils: utils,
       dialogVisible: false,
@@ -251,11 +251,11 @@ export default {
         jbdw: "",
         pxbmc: "",
         content: "",
-        peixunNum: 0,
-        totalNum: 0,
-        jiguanTotalNum: 0,
-        fuwuzuzhiToalNum: 0,
-        otherTotalNum: 0
+        peixunNum: null,
+        totalNum: null,
+        jiguanTotalNum: null,
+        fuwuzuzhiToalNum: null,
+        otherTotalNum: null
       }
     },
     handleEdit (index, rowData) {

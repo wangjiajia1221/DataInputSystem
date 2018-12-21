@@ -172,7 +172,8 @@ let MockConf = {
   '/jilugongzuo/add': {id: 33},
   '/huodongkaizhan/add': {id: 33},
   '/jilibaozhang/add': {id: 33},
-  '/zyfwzijin/add': {id: 33}
+  '/zyfwzijin/add': {id: 33},
+  '/zyzpeixun/get': {"data": [{"id": 8, "province": "\u9752\u6d77\u7701", "jbdw": null, "pxbmc": null, "content": null, "peixunNum": "0", "totalNum": "2170", "jiguanTotalNum": "170", "fuwuzuzhiToalNum": "1800", "otherTotalNum": "0"}, {"id": 7, "province": "\u9752\u6d77\u7701", "jbdw": "\u9752\u6d77\u7701\u6c11\u653f\u5385\u3001\u7701\u6587\u660e\u529e\u3001\u56e2\u7701\u59d4", "pxbmc": "\u300a\u5fd7\u613f\u670d\u52a1\u6761\u4f8b\u300b\u57f9\u8bad\u73ed", "content": "\u300a\u5fd7\u613f\u670d\u52a1\u6761\u4f8b\u300b\u89e3\u8bfb\u548c\u5168\u56fd\u5fd7\u613f\u670d\u52a1\u4fe1\u606f\u7cfb\u7edf\u7684\u64cd\u4f5c\u4f7f\u7528", "peixunNum": "170", "totalNum": "0", "jiguanTotalNum": "0", "fuwuzuzhiToalNum": "0", "otherTotalNum": "0"}, {"id": 6, "province": "\u9752\u6d77\u7701", "jbdw": null, "pxbmc": null, "content": null, "peixunNum": "0", "totalNum": "2170", "jiguanTotalNum": "170", "fuwuzuzhiToalNum": "1800", "otherTotalNum": "0"}, {"id": 5, "province": "\u9752\u6d77\u7701", "jbdw": "\u9752\u6d77\u7701\u6c11\u653f\u5385\u3001\u7701\u6587\u660e\u529e\u3001\u56e2\u7701\u59d4", "pxbmc": "\u300a\u5fd7\u613f\u670d\u52a1\u6761\u4f8b\u300b\u57f9\u8bad\u73ed", "content": "\u300a\u5fd7\u613f\u670d\u52a1\u6761\u4f8b\u300b\u89e3\u8bfb\u548c\u5168\u56fd\u5fd7\u613f\u670d\u52a1\u4fe1\u606f\u7cfb\u7edf\u7684\u64cd\u4f5c\u4f7f\u7528", "peixunNum": "170", "totalNum": "0", "jiguanTotalNum": "0", "fuwuzuzhiToalNum": "0", "otherTotalNum": "0"}], "total": 4}
 }
 
 Object.keys(MockConf).forEach((url) => {
