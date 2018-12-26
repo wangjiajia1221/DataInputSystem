@@ -35,7 +35,7 @@
                 <el-option :label="levels[3]" value="3"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item
+            <!-- <el-form-item
               label="地区:"
               :rules="[
                 { required: true, message: '不能为空'}
@@ -44,7 +44,7 @@
               <el-input 
                 placeholder="如XX市或XX县"
                 auto-complete="off" v-model="formData.areaName"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item
               label="社会团体:"
               
@@ -150,11 +150,11 @@
               {{levels[scope.row.level]}}
             </template>
           </el-table-column>
-          <el-table-column
+          <!-- <el-table-column
             prop="areaName"
             sortable
             label="地区">
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column label="在民政部门登记的志愿服务组织数">
             <el-table-column
               prop="shtt"
@@ -228,7 +228,7 @@ export default {
         id: null,
         province: null,
         level: null,
-        areaName: null,
+        // areaName: null,
         shtt: null,
         shfwjg: null,
         jjh: null,
@@ -289,7 +289,7 @@ export default {
         id: null,
         province: null,
         level: null,
-        areaName: null,
+        // areaName: null,
         shtt: null,
         shfwjg: null,
         jjh: null,
